@@ -1,4 +1,3 @@
-// internal/compose/executor.go
 package compose
 
 import (
@@ -13,13 +12,20 @@ import (
 // Executor handles docker-compose commands
 type Executor struct {
 	ComposeFile string
+	ProjectDir  string
 }
 
-// NewExecutor creates a new executor
-func NewExecutor() *Executor {
-	return &Executor{
-		ComposeFile: "docker-compose.yml", // default file
+// NewExecutor creates a new executor with auto-detected compose file
+func NewExecutor() (*Executor, error) {
+	composePath, err := FindComposeFile()
+	if err != nil {
+		return nil, err
 	}
+
+	return &Executor{
+		ComposeFile: composePath,
+		ProjectDir:  GetProjectDir(composePath),
+	}, nil
 }
 
 // Up starts services
@@ -27,7 +33,12 @@ func (e *Executor) Up(services []string) error {
 	args := []string{"up", "-d"}
 	args = append(args, services...)
 
-	output.Info(fmt.Sprintf("Starting services: %s", strings.Join(services, ", ")))
+	if len(services) == 0 {
+		output.Info("Starting all services...")
+	} else {
+		output.Info(fmt.Sprintf("Starting services: %s", strings.Join(services, ", ")))
+	}
+
 	return e.runCommand(args...)
 }
 
@@ -45,17 +56,37 @@ func (e *Executor) Logs(services []string, follow bool) error {
 	}
 	args = append(args, services...)
 
-	output.Info(fmt.Sprintf("Showing logs for: %s", strings.Join(services, ", ")))
+	if len(services) == 0 {
+		output.Info("Showing logs for all services...")
+	} else {
+		output.Info(fmt.Sprintf("Showing logs for: %s", strings.Join(services, ", ")))
+	}
+
+	return e.runCommand(args...)
+}
+
+// Ps shows container status
+func (e *Executor) Ps() error {
+	return e.runCommand("ps")
+}
+
+// Restart restarts services
+func (e *Executor) Restart(services []string) error {
+	args := []string{"restart"}
+	args = append(args, services...)
 	return e.runCommand(args...)
 }
 
 // runCommand executes docker-compose with given arguments
 func (e *Executor) runCommand(args ...string) error {
-	// Build command: docker-compose -f docker-compose.yml <args>
+	// Build command: docker-compose -f /path/to/docker-compose.yml <args>
 	cmdArgs := []string{"-f", e.ComposeFile}
 	cmdArgs = append(cmdArgs, args...)
 
 	cmd := exec.Command("docker-compose", cmdArgs...)
+
+	// Change to project directory (important for relative paths in compose file)
+	cmd.Dir = e.ProjectDir
 
 	// Connect output to terminal
 	cmd.Stdout = os.Stdout
@@ -68,4 +99,21 @@ func (e *Executor) runCommand(args ...string) error {
 	}
 
 	return nil
+}
+
+// GetInfo returns executor info for debugging
+func (e *Executor) GetInfo() string {
+	return fmt.Sprintf("Project: %s\nCompose file: %s", e.ProjectDir, e.ComposeFile)
+}
+
+// NewExecutorWithFile creates executor with specific compose file
+func NewExecutorWithFile(composePath string) (*Executor, error) {
+	if !fileExists(composePath) {
+		return nil, fmt.Errorf("compose file not found: %s", composePath)
+	}
+
+	return &Executor{
+		ComposeFile: composePath,
+		ProjectDir:  GetProjectDir(composePath),
+	}, nil
 }

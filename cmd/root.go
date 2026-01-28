@@ -4,8 +4,11 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/catstackdev/dockman/internal/compose"
 	"github.com/spf13/cobra"
 )
+
+var composeFile string
 
 // rootCmd is the base command
 var rootCmd = &cobra.Command{
@@ -24,8 +27,25 @@ func Execute() {
 }
 
 func init() {
+	// Global flag - NO SHORTHAND to avoid conflict with logs -f
+	rootCmd.PersistentFlags().StringVar(&composeFile, "file", "", "Specify docker-compose file path")
+
 	// Register subcommands here
 	rootCmd.AddCommand(upCmd)
 	rootCmd.AddCommand(downCmd)
 	rootCmd.AddCommand(logsCmd)
+	rootCmd.AddCommand(presetCmd)
+	rootCmd.AddCommand(psCmd)
+	rootCmd.AddCommand(restartCmd)
+	rootCmd.AddCommand(infoCmd)
+}
+
+// getExecutor returns executor with optional file override
+func getExecutor() (*compose.Executor, error) {
+	if composeFile != "" {
+		// Use specified file
+		return compose.NewExecutorWithFile(composeFile)
+	}
+	// Auto-detect
+	return compose.NewExecutor()
 }

@@ -6,10 +6,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var downCmd = &cobra.Command{
-	Use:   "down",
-	Short: "Stop all services",
-	Long:  `Stop and remove all containers defined in docker-compose.yml`,
+var restartCmd = &cobra.Command{
+	Use:   "restart [services...]",
+	Short: "Restart services",
+	Long:  `Restart one or more services`,
+	Example: `  dockman restart api        # Restart API
+  dockman restart             # Restart all`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		executor, err := compose.NewExecutor()
 		if err != nil {
@@ -17,12 +19,13 @@ var downCmd = &cobra.Command{
 			return err
 		}
 
-		if err := executor.Down(); err != nil {
+		output.Info("Restarting services...")
+		if err := executor.Restart(args); err != nil {
 			output.Error(err.Error())
 			return err
 		}
 
-		output.Success("All services stopped!")
+		output.Success("Services restarted!")
 		return nil
 	},
 }

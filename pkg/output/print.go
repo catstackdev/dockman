@@ -33,3 +33,14 @@ func Error(msg string) {
 func Warning(msg string) {
 	fmt.Printf("%s %s\n", yellow("⚠"), msg)
 }
+
+// FormatPresetName formats a preset name with color
+func FormatPresetName(name string) string {
+	return cyan("●") + " " + name
+}
+
+// Gray prints gray text
+func Gray(text string) string {
+	gray := color.New(color.FgHiBlack).SprintFunc()
+	return gray(text)
+}

@@ -6,10 +6,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var downCmd = &cobra.Command{
-	Use:   "down",
-	Short: "Stop all services",
-	Long:  `Stop and remove all containers defined in docker-compose.yml`,
+var psCmd = &cobra.Command{
+	Use:   "ps",
+	Short: "List running containers",
+	Long:  `Show status of all containers defined in docker-compose.yml`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		executor, err := compose.NewExecutor()
 		if err != nil {
@@ -17,12 +17,11 @@ var downCmd = &cobra.Command{
 			return err
 		}
 
-		if err := executor.Down(); err != nil {
+		if err := executor.Ps(); err != nil {
 			output.Error(err.Error())
 			return err
 		}
 
-		output.Success("All services stopped!")
 		return nil
 	},
 }

@@ -17,7 +17,11 @@ var logsCmd = &cobra.Command{
   dockman logs api -f    # Follow API logs
   dockman logs api postgres  # View specific services`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		executor := compose.NewExecutor()
+		executor, err := compose.NewExecutor()
+		if err != nil {
+			output.Error(err.Error())
+			return err
+		}
 
 		if err := executor.Logs(args, follow); err != nil {
 			output.Error(err.Error())

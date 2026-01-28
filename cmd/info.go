@@ -1,15 +1,17 @@
 package cmd
 
 import (
+	"fmt"
+
 	"github.com/catstackdev/dockman/internal/compose"
 	"github.com/catstackdev/dockman/pkg/output"
 	"github.com/spf13/cobra"
 )
 
-var downCmd = &cobra.Command{
-	Use:   "down",
-	Short: "Stop all services",
-	Long:  `Stop and remove all containers defined in docker-compose.yml`,
+var infoCmd = &cobra.Command{
+	Use:   "info",
+	Short: "Show project information",
+	Long:  `Display information about detected docker-compose project`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		executor, err := compose.NewExecutor()
 		if err != nil {
@@ -17,12 +19,10 @@ var downCmd = &cobra.Command{
 			return err
 		}
 
-		if err := executor.Down(); err != nil {
-			output.Error(err.Error())
-			return err
-		}
+		fmt.Println("\n📦 Project Information:\n")
+		fmt.Println(executor.GetInfo())
+		fmt.Println()
 
-		output.Success("All services stopped!")
 		return nil
 	},
 }
