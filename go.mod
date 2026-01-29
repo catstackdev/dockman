@@ -2,8 +2,6 @@ module github.com/catstackdev/dockman
 
 go 1.24.0
 
-toolchain go1.25.6
-
 require (
 	github.com/fatih/color v1.18.0
 	github.com/manifoldco/promptui v0.9.0
