@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"os/exec"
 
 	"github.com/catstackdev/dockman/internal/config"
 	"github.com/catstackdev/dockman/pkg/output"
@@ -45,16 +46,26 @@ var configCmd = &cobra.Command{
 				editor = "vim"
 			}
 
-			output.Info(fmt.Sprintf("Opening %s in %s...", cfgPath, editor))
-
 			// Check if file exists, create if not
 			if _, err := os.Stat(cfgPath); os.IsNotExist(err) {
 				output.Warning("Config doesn't exist. Run 'dockman init' first.")
 				return nil
 			}
 
-			// Open in editor
-			executor.runCommand("exec", editor, cfgPath)
+			output.Info(fmt.Sprintf("Opening %s in %s...", cfgPath, editor))
+
+			// Open in editor using exec package
+			cmd := exec.Command(editor, cfgPath)
+			cmd.Stdin = os.Stdin
+			cmd.Stdout = os.Stdout
+			cmd.Stderr = os.Stderr
+
+			if err := cmd.Run(); err != nil {
+				output.Error(fmt.Sprintf("Failed to open editor: %v", err))
+				return err
+			}
+
+			output.Success("Config updated!")
 			return nil
 		}
 

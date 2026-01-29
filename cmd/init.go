@@ -104,7 +104,12 @@ var initCmd = &cobra.Command{
 		fmt.Println()
 		output.Info("Step 4: Aliases (Optional)")
 		fmt.Println("  Create custom command shortcuts?")
-		fmt.Println("  Example: 'dockman db' → 'dockman up postgres redis'")
+		fmt.Println("  Create custom command shortcuts?")
+		fmt.Println("  Examples:")
+		fmt.Println("    db   → up postgres redis")
+		fmt.Println("    api  → up api postgres")
+		fmt.Println("    dev  → up")
+		fmt.Println()
 
 		aliasPrompt := promptui.Prompt{
 			Label:     "Add aliases",
