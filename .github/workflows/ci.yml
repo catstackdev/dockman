@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        go-version: [1.21.x, 1.22.x]
+        go-version: ['1.23.x', '1.24.x']
 
     steps:
       - name: Checkout code
@@ -55,12 +55,12 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: 1.22.x
+          go-version: '1.24.x'
 
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v4
+        uses: golangci/golangci-lint-action@v6
         with:
-          version: latest
+          version: v1.62.0
 
   build:
     name: Build
@@ -73,7 +73,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: 1.22.x
+          go-version: '1.24.x'
 
       - name: Build
         run: go build -v -o dockman .
