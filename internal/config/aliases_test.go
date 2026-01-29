@@ -16,7 +16,9 @@ func TestResolveAlias(t *testing.T) {
 		},
 	}
 
-	SaveProjectConfig(tmpDir, cfg)
+	if err := SaveProjectConfig(tmpDir, cfg); err != nil {
+		t.Fatalf("Failed to save project config: %v", err)
+	}
 
 	tests := []struct {
 		name     string

@@ -99,6 +99,9 @@ func init() {
 	rootCmd.AddCommand(pauseCmd)
 	rootCmd.AddCommand(unpauseCmd)
 	rootCmd.AddCommand(killCmd)
+	rootCmd.AddCommand(stopCmd)
+	rootCmd.AddCommand(startCmd)
+	rootCmd.AddCommand(shCmd)
 }
 
 // tryResolveAlias attempts to resolve command as an alias

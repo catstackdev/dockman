@@ -10,11 +10,16 @@ import (
 func TestPresetManager(t *testing.T) {
 	// Setup temp config directory
 	tmpDir := t.TempDir()
-	os.Setenv("HOME", tmpDir)
-	defer os.Unsetenv("HOME")
+	originalHome := os.Getenv("HOME")
+	if err := os.Setenv("HOME", tmpDir); err != nil {
+		t.Fatalf("Failed to set HOME: %v", err)
+	}
+	defer func() { _ = os.Setenv("HOME", originalHome) }()
 
 	// Ensure config dir exists
-	config.EnsureConfigDir()
+	if err := config.EnsureConfigDir(); err != nil {
+		t.Fatalf("Failed to ensure config dir: %v", err)
+	}
 
 	// Create manager
 	mgr, err := NewManager()

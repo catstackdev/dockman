@@ -11,7 +11,9 @@ func TestNewExecutorWithFile(t *testing.T) {
 
 	// Create a compose file
 	composeFile := filepath.Join(tmpDir, "docker-compose.yml")
-	os.WriteFile(composeFile, []byte("version: '3'\nservices:\n  web:\n    image: nginx"), 0o644)
+	if err := os.WriteFile(composeFile, []byte("version: '3'\nservices:\n  web:\n    image: nginx"), 0o644); err != nil {
+		t.Fatalf("Failed to write compose file: %v", err)
+	}
 
 	// Test with existing file
 	executor, err := NewExecutorWithFile(composeFile)
@@ -38,7 +40,9 @@ func TestNewExecutorWithFile_NotFound(t *testing.T) {
 func TestExecutor_GetInfo(t *testing.T) {
 	tmpDir := t.TempDir()
 	composeFile := filepath.Join(tmpDir, "docker-compose.yml")
-	os.WriteFile(composeFile, []byte("version: '3'"), 0o644)
+	if err := os.WriteFile(composeFile, []byte("version: '3'"), 0o644); err != nil {
+		t.Fatalf("Failed to write compose file: %v", err)
+	}
 
 	executor, _ := NewExecutorWithFile(composeFile)
 	info := executor.GetInfo()

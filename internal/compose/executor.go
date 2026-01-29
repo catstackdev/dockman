@@ -165,10 +165,7 @@ func (e *Executor) ShowImages(services []string) error {
 	args := []string{"config", "--services"}
 
 	if len(services) > 0 {
-		// Show specific services only
-		for _, service := range services {
-			args = append(args, service)
-		}
+		args = append(args, services...)
 	}
 
 	return e.runCommand(args...)

@@ -9,10 +9,12 @@ import (
 func TestGetConfigDir(t *testing.T) {
 	// Save original HOME
 	originalHome := os.Getenv("HOME")
-	defer os.Setenv("HOME", originalHome)
+	defer func() { _ = os.Setenv("HOME", originalHome) }()
 
 	tmpDir := t.TempDir()
-	os.Setenv("HOME", tmpDir)
+	if err := os.Setenv("HOME", tmpDir); err != nil {
+		t.Fatalf("Failed to set HOME: %v", err)
+	}
 
 	configDir, err := GetConfigDir()
 	if err != nil {
@@ -27,10 +29,12 @@ func TestGetConfigDir(t *testing.T) {
 
 func TestGetPresetsPath(t *testing.T) {
 	originalHome := os.Getenv("HOME")
-	defer os.Setenv("HOME", originalHome)
+	defer func() { _ = os.Setenv("HOME", originalHome) }()
 
 	tmpDir := t.TempDir()
-	os.Setenv("HOME", tmpDir)
+	if err := os.Setenv("HOME", tmpDir); err != nil {
+		t.Fatalf("Failed to set HOME: %v", err)
+	}
 
 	presetsPath, err := GetPresetsPath()
 	if err != nil {
@@ -45,10 +49,12 @@ func TestGetPresetsPath(t *testing.T) {
 
 func TestEnsureConfigDir(t *testing.T) {
 	originalHome := os.Getenv("HOME")
-	defer os.Setenv("HOME", originalHome)
+	defer func() { _ = os.Setenv("HOME", originalHome) }()
 
 	tmpDir := t.TempDir()
-	os.Setenv("HOME", tmpDir)
+	if err := os.Setenv("HOME", tmpDir); err != nil {
+		t.Fatalf("Failed to set HOME: %v", err)
+	}
 
 	err := EnsureConfigDir()
 	if err != nil {
@@ -69,10 +75,12 @@ func TestEnsureConfigDir(t *testing.T) {
 
 func TestPresetsFileExists(t *testing.T) {
 	originalHome := os.Getenv("HOME")
-	defer os.Setenv("HOME", originalHome)
+	defer func() { _ = os.Setenv("HOME", originalHome) }()
 
 	tmpDir := t.TempDir()
-	os.Setenv("HOME", tmpDir)
+	if err := os.Setenv("HOME", tmpDir); err != nil {
+		t.Fatalf("Failed to set HOME: %v", err)
+	}
 
 	// Initially should not exist
 	exists, err := PresetsFileExists()
@@ -84,9 +92,13 @@ func TestPresetsFileExists(t *testing.T) {
 	}
 
 	// Create config dir and presets file
-	EnsureConfigDir()
+	if err := EnsureConfigDir(); err != nil {
+		t.Fatalf("Failed to ensure config dir: %v", err)
+	}
 	presetsPath, _ := GetPresetsPath()
-	os.WriteFile(presetsPath, []byte("presets: {}"), 0o644)
+	if err := os.WriteFile(presetsPath, []byte("presets: {}"), 0o644); err != nil {
+		t.Fatalf("Failed to write presets file: %v", err)
+	}
 
 	// Now should exist
 	exists, err = PresetsFileExists()
@@ -119,7 +131,9 @@ func TestLoadProjectConfig(t *testing.T) {
 		},
 		AutoPull: true,
 	}
-	SaveProjectConfig(tmpDir, testCfg)
+	if err := SaveProjectConfig(tmpDir, testCfg); err != nil {
+		t.Fatalf("Failed to save project config: %v", err)
+	}
 
 	loaded, err := LoadProjectConfig(tmpDir)
 	if err != nil {
