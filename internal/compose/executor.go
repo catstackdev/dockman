@@ -117,3 +117,59 @@ func NewExecutorWithFile(composePath string) (*Executor, error) {
 		ProjectDir:  GetProjectDir(composePath),
 	}, nil
 }
+
+func (e *Executor) Clean(removeVolumes, removeAll bool) error {
+	args := []string{"down"}
+
+	if removeVolumes {
+		args = append(args, "-v")
+	}
+
+	if removeAll {
+		args = append(args, "--rmi", "all", "-v")
+	}
+
+	// Remove orphan containers
+	args = append(args, "--remove-orphans")
+
+	return e.runCommand(args...)
+}
+
+// Exec executes a command in a service container
+func (e *Executor) Exec(service string, command []string) error {
+	args := []string{"exec", service}
+	args = append(args, command...)
+
+	return e.runCommand(args...)
+}
+
+// PsQuiet shows only container IDs
+func (e *Executor) PsQuiet() error {
+	return e.runCommand("ps", "-q")
+}
+
+// Pull pulls images (updated with better output)
+func (e *Executor) Pull(services []string) error {
+	args := []string{"pull"}
+
+	// Add --ignore-pull-failures to continue on errors
+	args = append(args, "--ignore-pull-failures")
+
+	args = append(args, services...)
+
+	return e.runCommand(args...)
+}
+
+// ShowImages displays configured images from docker-compose.yml
+func (e *Executor) ShowImages(services []string) error {
+	args := []string{"config", "--services"}
+
+	if len(services) > 0 {
+		// Show specific services only
+		for _, service := range services {
+			args = append(args, service)
+		}
+	}
+
+	return e.runCommand(args...)
+}

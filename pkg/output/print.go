@@ -44,3 +44,8 @@ func Gray(text string) string {
 	gray := color.New(color.FgHiBlack).SprintFunc()
 	return gray(text)
 }
+
+// Cyan returns cyan colored text (useful for prompts)
+func Cyan(text string) string {
+	return cyan(text)
+}

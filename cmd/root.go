@@ -38,6 +38,11 @@ func init() {
 	rootCmd.AddCommand(psCmd)
 	rootCmd.AddCommand(restartCmd)
 	rootCmd.AddCommand(infoCmd)
+	rootCmd.AddCommand(cleanCmd)
+	rootCmd.AddCommand(execCmd)
+	rootCmd.AddCommand(pullCmd)
+	rootCmd.AddCommand(versionCmd)
+	rootCmd.AddCommand(completionCmd)
 }
 
 // getExecutor returns executor with optional file override
