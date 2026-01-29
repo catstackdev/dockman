@@ -1,11 +1,13 @@
 # 🐳 Dockman
 
-Docker Compose manager with presets and shortcuts.
+Docker Compose manager with presets, shortcuts, and quality-of-life
+improvements.
 
 ## Features
 
 ✨ **Auto-detect** docker-compose.yml from any subdirectory  
 🎯 **Presets** - Start groups of services with one command  
+🔧 **Custom Aliases** - Define project-specific shortcuts  
 📦 **Smart cleanup** - Remove stopped containers, volumes, images  
 🚀 **Quick access** - Shell into containers instantly  
 🎨 **Pretty output** - Colored, easy-to-read terminal output
@@ -34,53 +36,92 @@ dockman restart api           # Restart service
 dockman exec api              # Shell into container
 dockman down                  # Stop everything
 
-# Maintenance
+# Build & pull
+dockman build                 # Build images
+dockman build --no-cache      # Fresh build
 dockman pull                  # Update images
-dockman pull -f               # Skip confirmation prompt
-dockman clean                 # Remove stopped containers
-dockman clean -v              # Also remove volumes
-dockman clean --all           # Nuclear option
 
-# Info
-dockman info                  # Show detected project
-dockman version               # Show version
+# Utilities
+dockman port api 3000         # Show port mapping
+dockman stats                 # Resource usage
+dockman events                # Watch events
+dockman list                  # List all services
 ```
 
-## Quick Commands
+## All Commands
 
-Dockman supports aliases for faster typing:
+### Core Operations
 
-```bash
-dockman u dev      # up
-dockman d          # down
-dockman l api -f   # logs
-dockman r api      # restart
-dockman e api      # exec
-dockman sh api     # exec (open shell)
-dockman top        # stats
-```
+| Command              | Aliases      | Description       |
+| -------------------- | ------------ | ----------------- |
+| `up [services]`      | `u`, `start` | Start services    |
+| `down`               | `d`, `stop`  | Stop all services |
+| `restart [services]` | `r`          | Restart services  |
+| `logs [services] -f` | `l`          | View logs         |
+| `exec <service>`     | `e`, `sh`    | Shell access      |
 
-## Project Configuration
+### Service Management
 
-Create `.dockman.yml` in your project root:
+| Command              | Description          |
+| -------------------- | -------------------- |
+| `build [services]`   | Build/rebuild images |
+| `pull [services]`    | Pull latest images   |
+| `pause [services]`   | Pause services       |
+| `unpause [services]` | Unpause services     |
+| `kill [services]`    | Force stop services  |
 
-```bash
-dockman init       # Interactive setup
-```
+### Information & Monitoring
 
-Example `.dockman.yml`:
+| Command                 | Aliases          | Description            |
+| ----------------------- | ---------------- | ---------------------- |
+| `ps`                    |                  | List containers        |
+| `stats [services]`      | `top`            | Resource usage         |
+| `port <service> [port]` |                  | Show port mappings     |
+| `list`                  | `ls`, `services` | List all services      |
+| `events`                |                  | Watch container events |
+
+### Maintenance
+
+| Command             | Description               |
+| ------------------- | ------------------------- |
+| `clean [-v\|--all]` | Clean up resources        |
+| `validate`          | Check compose file syntax |
+
+### Configuration
+
+| Command           | Description         |
+| ----------------- | ------------------- |
+| `init`            | Create .dockman.yml |
+| `config [--edit]` | View/edit config    |
+| `preset list`     | List presets        |
+| `aliases`         | List custom aliases |
+| `info`            | Show project info   |
+| `version`         | Show version        |
+
+## Custom Aliases
+
+Create `.dockman.yml`:
 
 ```yaml
 default_preset: dev
 auto_pull: false
 aliases:
   db: 'up postgres redis'
-  api-dev: 'up api postgres redis'
+  api: 'up api postgres'
+  build-api: 'build --no-cache api'
+```
+
+Use them:
+
+```bash
+dockman db                    # → dockman up postgres redis
+dockman api                   # → dockman up api postgres
+dockman build-api             # → dockman build --no-cache api
 ```
 
 ## Presets
 
-Create `~/.dockman/presets.yaml`:
+Configure in `~/.dockman/presets.yaml`:
 
 ```yaml
 presets:
@@ -91,37 +132,33 @@ presets:
   api-only:
     services: [postgres, api]
     description: Backend development
-
-  db:
-    services: [postgres, redis]
-    description: Databases only
 ```
 
-Then use:
+## Examples
 
 ```bash
-dockman up dev
-dockman up api-only
+# Daily workflow
+dockman up dev                # Start development environment
+dockman logs api -f           # Watch API logs
+dockman exec api npm test     # Run tests
+dockman restart api           # Restart after changes
+
+# Building
+dockman build api             # Build API image
+dockman build --no-cache      # Clean build
+dockman pull && dockman up    # Update and start
+
+# Debugging
+dockman port api 3000         # Check port mapping
+dockman stats                 # Monitor resources
+dockman events                # Watch container events
+dockman exec api /bin/sh      # Debug inside container
+
+# Cleanup
+dockman down                  # Stop all
+dockman clean -v              # Remove volumes too
+dockman clean --all           # Nuclear option
 ```
-
-## All Commands
-
-| Command                 | Alias        | Description              |
-| ----------------------- | ------------ | ------------------------ |
-| `up [preset\|services]` | `u`, `start` | Start services or preset |
-| `down`                  | `d`, `stop`  | Stop all services        |
-| `logs [services] -f`    | `l`          | View logs                |
-| `ps [-q]`               |              | List containers          |
-| `restart [services]`    | `r`          | Restart services         |
-| `exec <service> [cmd]`  | `e`, `sh`    | Shell access             |
-| `pull [services]`       |              | Pull images              |
-| `clean [-v\|--all]`     |              | Clean up resources       |
-| `stats [services]`      | `top`        | Resource usage           |
-| `preset list`           |              | List presets             |
-| `info`                  |              | Project info             |
-| `init`                  |              | Create config            |
-| `version`               |              | Version info             |
-| `completion [shell]`    |              | Shell completion         |
 
 ## Shell Completion
 
@@ -135,23 +172,6 @@ dockman completion bash > /usr/local/etc/bash_completion.d/dockman
 # Fish
 dockman completion fish > ~/.config/fish/completions/dockman.fish
 ```
-
-## Development
-
-```bash
-git clone https://github.com/catstackdev/dockman.git
-cd dockman
-go build -o dockman .
-./dockman --help
-```
-
-## Roadmap
-
-- [x] Phase 1: Basic commands (up, down, logs)
-- [x] Phase 2: Presets system
-- [x] Phase 3: Advanced features (clean, exec, pull)
-- [ ] Phase 4: Health checks & monitoring
-- [ ] Phase 5: Multi-project management
 
 ## License
 

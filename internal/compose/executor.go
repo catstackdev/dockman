@@ -29,18 +29,18 @@ func NewExecutor() (*Executor, error) {
 }
 
 // Up starts services
-func (e *Executor) Up(services []string) error {
-	args := []string{"up", "-d"}
-	args = append(args, services...)
-
-	if len(services) == 0 {
-		output.Info("Starting all services...")
-	} else {
-		output.Info(fmt.Sprintf("Starting services: %s", strings.Join(services, ", ")))
-	}
-
-	return e.runCommand(args...)
-}
+// func (e *Executor) Up(services []string) error {
+// 	args := []string{"up", "-d"}
+// 	args = append(args, services...)
+//
+// 	if len(services) == 0 {
+// 		output.Info("Starting all services...")
+// 	} else {
+// 		output.Info(fmt.Sprintf("Starting services: %s", strings.Join(services, ", ")))
+// 	}
+//
+// 	return e.runCommand(args...)
+// }
 
 // Down stops all services
 func (e *Executor) Down() error {
@@ -195,4 +195,84 @@ func (e *Executor) ListServices() error {
 // Validate checks compose file syntax
 func (e *Executor) Validate() error {
 	return e.runCommand("config", "--quiet")
+}
+
+// Port shows port mappings for a service
+func (e *Executor) Port(service, privatePort string) error {
+	args := []string{"port", service}
+	if privatePort != "" {
+		args = append(args, privatePort)
+	}
+	return e.runCommand(args...)
+}
+
+// Build builds or rebuilds services
+func (e *Executor) Build(services []string, noCache, parallel, pull bool) error {
+	args := []string{"build"}
+
+	if noCache {
+		args = append(args, "--no-cache")
+	}
+
+	if !parallel {
+		args = append(args, "--no-parallel")
+	}
+
+	if pull {
+		args = append(args, "--pull")
+	}
+
+	args = append(args, services...)
+
+	return e.runCommand(args...)
+}
+
+// Events streams container events
+func (e *Executor) Events() error {
+	return e.runCommand("events")
+}
+
+// Pause pauses running services
+func (e *Executor) Pause(services []string) error {
+	args := []string{"pause"}
+	args = append(args, services...)
+	return e.runCommand(args...)
+}
+
+// Unpause unpauses paused services
+func (e *Executor) Unpause(services []string) error {
+	args := []string{"unpause"}
+	args = append(args, services...)
+	return e.runCommand(args...)
+}
+
+// Kill force stops services
+func (e *Executor) Kill(services []string, signal string) error {
+	args := []string{"kill"}
+
+	if signal != "" && signal != "SIGKILL" {
+		args = append(args, "-s", signal)
+	}
+
+	args = append(args, services...)
+	return e.runCommand(args...)
+}
+
+// UpWithEnv starts services with custom env file
+func (e *Executor) UpWithEnv(services []string, envFile string) error {
+	args := []string{"up", "-d"}
+
+	if envFile != "" {
+		args = append([]string{"--env-file", envFile}, args...)
+	}
+
+	args = append(args, services...)
+
+	if len(services) == 0 {
+		output.Info("Starting all services...")
+	} else {
+		output.Info(fmt.Sprintf("Starting services: %s", strings.Join(services, ", ")))
+	}
+
+	return e.runCommand(args...)
 }

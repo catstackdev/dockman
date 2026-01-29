@@ -14,17 +14,42 @@ import (
 
 var composeFile string
 
-// rootCmd is the base command
+//	var rootCmd = &cobra.Command{
+//		Use:   "dockman",
+//		Short: "Docker Compose manager with presets",
+//		Long: `Dockman is a CLI tool that makes docker-compose easier to use.
+//
+// It provides shortcuts, presets, and better log viewing.`,
+//
+//		Example: `  dockman up dev           # Start dev preset
+//	  dockman logs api -f      # Follow API logs
+//	  dockman d                # Alias for 'down'
+//	  dockman db               # Custom alias from .dockman.yml`,
+//		// Handle unknown commands as potential aliases
+//		SilenceErrors: true,
+//		SilenceUsage:  true,
+//	}
 var rootCmd = &cobra.Command{
 	Use:   "dockman",
 	Short: "Docker Compose manager with presets",
 	Long: `Dockman is a CLI tool that makes docker-compose easier to use.
-It provides shortcuts, presets, and better log viewing.`,
+It provides shortcuts, presets, and better log viewing.
+
+Common Commands:
+  up, down, logs, restart, exec, ps
+  
+Service Management:
+  build, pull, pause, unpause, kill
+  
+Utilities:
+  list, port, events, stats, config
+  
+Custom Shortcuts:
+  Define aliases in .dockman.yml`,
 	Example: `  dockman up dev           # Start dev preset
   dockman logs api -f      # Follow API logs
-  dockman d                # Alias for 'down'
+  dockman build --no-cache # Rebuild images
   dockman db               # Custom alias from .dockman.yml`,
-	// Handle unknown commands as potential aliases
 	SilenceErrors: true,
 	SilenceUsage:  true,
 }
@@ -68,6 +93,12 @@ func init() {
 	rootCmd.AddCommand(configCmd)
 	rootCmd.AddCommand(validateCmd)
 	rootCmd.AddCommand(aliasesCmd)
+	rootCmd.AddCommand(portCmd)
+	rootCmd.AddCommand(buildCmd)
+	rootCmd.AddCommand(eventsCmd)
+	rootCmd.AddCommand(pauseCmd)
+	rootCmd.AddCommand(unpauseCmd)
+	rootCmd.AddCommand(killCmd)
 }
 
 // tryResolveAlias attempts to resolve command as an alias
