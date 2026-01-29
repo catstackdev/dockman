@@ -53,6 +53,9 @@ func init() {
 	rootCmd.AddCommand(stopCmd)
 	rootCmd.AddCommand(startCmd)
 	rootCmd.AddCommand(shCmd)
+	rootCmd.AddCommand(listCmd)
+	rootCmd.AddCommand(configCmd)
+	rootCmd.AddCommand(validateCmd)
 }
 
 // getExecutor returns executor with optional file override

@@ -186,3 +186,13 @@ func (e *Executor) Stats(services []string, noStream bool) error {
 
 	return e.runCommand(args...)
 }
+
+// ListServices lists all services in compose file
+func (e *Executor) ListServices() error {
+	return e.runCommand("config", "--services")
+}
+
+// Validate checks compose file syntax
+func (e *Executor) Validate() error {
+	return e.runCommand("config", "--quiet")
+}

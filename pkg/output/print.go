@@ -61,16 +61,58 @@ func ErrorWithHelp(msg string, help string) {
 
 // Box prints a boxed message
 func Box(title string, lines []string) {
-	width := 50
+	width := 60
+
+	// Top border
 	fmt.Printf("\n╭%s╮\n", strings.Repeat("─", width))
-	fmt.Printf("│ %s%s │\n", title, strings.Repeat(" ", width-len(title)-2))
+
+	// Title
+	titlePadding := width - len(title) - 2
+	if titlePadding < 0 {
+		titlePadding = 0
+	}
+	fmt.Printf("│ %s%s%s │\n",
+		green("✓"),
+		" "+title,
+		strings.Repeat(" ", titlePadding-2))
+
+	// Separator
 	fmt.Printf("├%s┤\n", strings.Repeat("─", width))
+
+	// Content lines
 	for _, line := range lines {
-		padding := width - len(line) - 2
+		// Handle color codes in length calculation
+		visibleLen := len(stripANSI(line))
+		padding := width - visibleLen - 2
 		if padding < 0 {
 			padding = 0
 		}
 		fmt.Printf("│ %s%s │\n", line, strings.Repeat(" ", padding))
 	}
+
+	// Bottom border
 	fmt.Printf("╰%s╯\n\n", strings.Repeat("─", width))
+}
+
+// stripANSI removes ANSI color codes for length calculation
+func stripANSI(s string) string {
+	// Simple ANSI stripper - remove escape sequences
+	var result strings.Builder
+	inEscape := false
+
+	for _, r := range s {
+		if r == '\x1b' {
+			inEscape = true
+			continue
+		}
+		if inEscape {
+			if r == 'm' {
+				inEscape = false
+			}
+			continue
+		}
+		result.WriteRune(r)
+	}
+
+	return result.String()
 }
