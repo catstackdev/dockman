@@ -46,6 +46,38 @@ dockman info                  # Show detected project
 dockman version               # Show version
 ```
 
+## Quick Commands
+
+Dockman supports aliases for faster typing:
+
+```bash
+dockman u dev      # up
+dockman d          # down
+dockman l api -f   # logs
+dockman r api      # restart
+dockman e api      # exec
+dockman sh api     # exec (open shell)
+dockman top        # stats
+```
+
+## Project Configuration
+
+Create `.dockman.yml` in your project root:
+
+```bash
+dockman init       # Interactive setup
+```
+
+Example `.dockman.yml`:
+
+```yaml
+default_preset: dev
+auto_pull: false
+aliases:
+  db: 'up postgres redis'
+  api-dev: 'up api postgres redis'
+```
+
 ## Presets
 
 Create `~/.dockman/presets.yaml`:
@@ -72,21 +104,24 @@ dockman up dev
 dockman up api-only
 ```
 
-## Commands
+## All Commands
 
-| Command                 | Description                  |
-| ----------------------- | ---------------------------- |
-| `up [preset\|services]` | Start services or preset     |
-| `down`                  | Stop all services            |
-| `logs [services] -f`    | View logs (follow with -f)   |
-| `ps [-q]`               | List containers              |
-| `restart [services]`    | Restart services             |
-| `exec <service> [cmd]`  | Execute command in container |
-| `pull [services]`       | Pull latest images           |
-| `clean [-v\|--all]`     | Clean up resources           |
-| `preset list`           | List available presets       |
-| `info`                  | Show project info            |
-| `version`               | Show version                 |
+| Command                 | Alias        | Description              |
+| ----------------------- | ------------ | ------------------------ |
+| `up [preset\|services]` | `u`, `start` | Start services or preset |
+| `down`                  | `d`, `stop`  | Stop all services        |
+| `logs [services] -f`    | `l`          | View logs                |
+| `ps [-q]`               |              | List containers          |
+| `restart [services]`    | `r`          | Restart services         |
+| `exec <service> [cmd]`  | `e`, `sh`    | Shell access             |
+| `pull [services]`       |              | Pull images              |
+| `clean [-v\|--all]`     |              | Clean up resources       |
+| `stats [services]`      | `top`        | Resource usage           |
+| `preset list`           |              | List presets             |
+| `info`                  |              | Project info             |
+| `init`                  |              | Create config            |
+| `version`               |              | Version info             |
+| `completion [shell]`    |              | Shell completion         |
 
 ## Shell Completion
 

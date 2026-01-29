@@ -8,9 +8,10 @@ import (
 )
 
 var execCmd = &cobra.Command{
-	Use:   "exec <service> [command]",
-	Short: "Execute command in a service container",
-	Long:  `Execute a command in a running service container. Defaults to /bin/sh if no command specified.`,
+	Use:     "exec <service> [command]",
+	Aliases: []string{"e", "sh"},
+	Short:   "Execute command in a service container",
+	Long:    `Execute a command in a running service container. Defaults to /bin/sh if no command specified.`,
 	Example: `  dockman exec api              # Open shell in api container
   dockman exec api npm test     # Run npm test in api
   dockman exec postgres psql    # Open psql in postgres`,

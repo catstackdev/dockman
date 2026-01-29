@@ -3,6 +3,7 @@ package output
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/fatih/color"
 )
@@ -48,4 +49,28 @@ func Gray(text string) string {
 // Cyan returns cyan colored text (useful for prompts)
 func Cyan(text string) string {
 	return cyan(text)
+}
+
+// ErrorWithHelp prints error with helpful suggestion
+func ErrorWithHelp(msg string, help string) {
+	Error(msg)
+	if help != "" {
+		fmt.Printf("  %s %s\n", yellow("💡"), Gray(help))
+	}
+}
+
+// Box prints a boxed message
+func Box(title string, lines []string) {
+	width := 50
+	fmt.Printf("\n╭%s╮\n", strings.Repeat("─", width))
+	fmt.Printf("│ %s%s │\n", title, strings.Repeat(" ", width-len(title)-2))
+	fmt.Printf("├%s┤\n", strings.Repeat("─", width))
+	for _, line := range lines {
+		padding := width - len(line) - 2
+		if padding < 0 {
+			padding = 0
+		}
+		fmt.Printf("│ %s%s │\n", line, strings.Repeat(" ", padding))
+	}
+	fmt.Printf("╰%s╯\n\n", strings.Repeat("─", width))
 }

@@ -10,9 +10,10 @@ import (
 )
 
 var upCmd = &cobra.Command{
-	Use:   "up [preset|services...]",
-	Short: "Start services or preset",
-	Long:  `Start one or more services, or use a preset to start a group of services`,
+	Use:     "up [preset|services...]",
+	Aliases: []string{"u", "start"},
+	Short:   "Start services or preset",
+	Long:    `Start one or more services, or use a preset to start a group of services`,
 	Example: `  dockman up dev              # Start 'dev' preset
   dockman up                  # Start all services
   dockman up api postgres     # Start specific services`,

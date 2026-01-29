@@ -1,0 +1,14 @@
+# Dockman project configuration
+# Copy to .dockman.yml and customize
+
+# Default preset to use when running 'dockman up' with no args
+default_preset: dev
+
+# Auto-pull images before starting services
+auto_pull: false
+
+# Custom aliases (optional)
+aliases:
+  db: "up postgres redis"
+  api-dev: "up api postgres redis"
+  frontend: "up frontend api postgres"

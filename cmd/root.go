@@ -16,6 +16,11 @@ var rootCmd = &cobra.Command{
 	Short: "Docker Compose manager with presets",
 	Long: `Dockman is a CLI tool that makes docker-compose easier to use.
 It provides shortcuts, presets, and better log viewing.`,
+	// Add examples to root command
+	Example: `  dockman up dev           # Start dev preset
+  dockman logs api -f      # Follow API logs
+  dockman d                # Alias for 'down'
+  dockman r api            # Alias for 'restart api'`,
 }
 
 // Execute runs the CLI
@@ -27,10 +32,10 @@ func Execute() {
 }
 
 func init() {
-	// Global flag - NO SHORTHAND to avoid conflict with logs -f
+	// Global flag
 	rootCmd.PersistentFlags().StringVar(&composeFile, "file", "", "Specify docker-compose file path")
 
-	// Register subcommands here
+	// Register all commands
 	rootCmd.AddCommand(upCmd)
 	rootCmd.AddCommand(downCmd)
 	rootCmd.AddCommand(logsCmd)
@@ -43,14 +48,17 @@ func init() {
 	rootCmd.AddCommand(pullCmd)
 	rootCmd.AddCommand(versionCmd)
 	rootCmd.AddCommand(completionCmd)
+	rootCmd.AddCommand(statsCmd)
+	rootCmd.AddCommand(initCmd)
+	rootCmd.AddCommand(stopCmd)
+	rootCmd.AddCommand(startCmd)
+	rootCmd.AddCommand(shCmd)
 }
 
 // getExecutor returns executor with optional file override
 func getExecutor() (*compose.Executor, error) {
 	if composeFile != "" {
-		// Use specified file
 		return compose.NewExecutorWithFile(composeFile)
 	}
-	// Auto-detect
 	return compose.NewExecutor()
 }

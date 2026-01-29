@@ -10,9 +10,10 @@ import (
 var follow bool // flag for -f
 
 var logsCmd = &cobra.Command{
-	Use:   "logs [services...]",
-	Short: "View service logs",
-	Long:  `View logs from one or more services`,
+	Use:     "logs [services...]",
+	Aliases: []string{"l"},
+	Short:   "View service logs",
+	Long:    `View logs from one or more services`,
 	Example: `  dockman logs           # View all logs
   dockman logs api -f    # Follow API logs
   dockman logs api postgres  # View specific services`,

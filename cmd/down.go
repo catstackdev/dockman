@@ -7,9 +7,10 @@ import (
 )
 
 var downCmd = &cobra.Command{
-	Use:   "down",
-	Short: "Stop all services",
-	Long:  `Stop and remove all containers defined in docker-compose.yml`,
+	Use:     "down",
+	Aliases: []string{"d", "stop"},
+	Short:   "Stop all services",
+	Long:    `Stop and remove all containers defined in docker-compose.yml`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		executor, err := compose.NewExecutor()
 		if err != nil {

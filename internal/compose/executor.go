@@ -173,3 +173,16 @@ func (e *Executor) ShowImages(services []string) error {
 
 	return e.runCommand(args...)
 }
+
+// Stats shows container resource usage
+func (e *Executor) Stats(services []string, noStream bool) error {
+	args := []string{"stats"}
+
+	if noStream {
+		args = append(args, "--no-stream")
+	}
+
+	args = append(args, services...)
+
+	return e.runCommand(args...)
+}
