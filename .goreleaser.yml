@@ -1,0 +1,93 @@
+project_name: dockman
+
+before:
+  hooks:
+    - go mod tidy
+    - go test ./...
+
+builds:
+  - main: .
+    binary: dockman
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w
+      - -X github.com/catstackdev/dockman/cmd.Version={{.Version}}
+      - -X github.com/catstackdev/dockman/cmd.BuildDate={{.Date}}
+      - -X github.com/catstackdev/dockman/cmd.GitCommit={{.Commit}}
+
+archives:
+  - format: tar.gz
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- .Version }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - README.md
+      - LICENSE
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  name_template: '{{ incpatch .Version }}-next'
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^chore:'
+      - Merge pull request
+      - Merge branch
+
+release:
+  github:
+    owner: catstackdev
+    name: dockman
+  draft: false
+  prerelease: auto
+
+brews:
+  - name: dockman
+    homepage: https://github.com/catstackdev/dockman
+    description: 'Docker Compose manager with presets and shortcuts'
+    license: MIT
+    repository:
+      owner: catstackdev
+      name: homebrew-tap
+      token: '{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}' # ← This must match secret name
+    commit_author:
+      name: goreleaserbot
+      email: bot@goreleaser.com
+    folder: Formula
+    install: |
+      bin.install "dockman"
+
+      # Install shell completions (if available)
+      if (bash_completion/"dockman.bash").exist?
+        bash_completion.install "completions/dockman.bash" => "dockman"
+      end
+      if (zsh_completion/"_dockman").exist?
+        zsh_completion.install "completions/_dockman" => "_dockman"
+      end
+      if (fish_completion/"dockman.fish").exist?
+        fish_completion.install "completions/dockman.fish"
+      end
+    test: |
+      system "#{bin}/dockman", "version"

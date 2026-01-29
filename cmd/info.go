@@ -19,7 +19,7 @@ var infoCmd = &cobra.Command{
 			return err
 		}
 
-		fmt.Println("\n📦 Project Information:\n")
+		fmt.Print("\n📦 Project Information:\n\n")
 		fmt.Println(executor.GetInfo())
 		fmt.Println()
 

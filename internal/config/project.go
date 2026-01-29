@@ -58,3 +58,72 @@ func SaveProjectConfig(projectDir string, config *ProjectConfig) error {
 
 	return nil
 }
+
+// ResolveAlias checks if the first argument is an alias and expands it
+// Returns the resolved args, whether it was an alias, and any error
+func ResolveAlias(projectDir string, args []string) ([]string, bool, error) {
+	if len(args) == 0 {
+		return args, false, nil
+	}
+
+	config, err := LoadProjectConfig(projectDir)
+	if err != nil {
+		return nil, false, err
+	}
+
+	// Check if first arg is an alias
+	if config.Aliases == nil {
+		return args, false, nil
+	}
+
+	aliasCmd, exists := config.Aliases[args[0]]
+	if !exists {
+		return args, false, nil
+	}
+
+	// Split alias command into parts
+	aliasParts := splitArgs(aliasCmd)
+
+	// Append any extra args passed after the alias
+	if len(args) > 1 {
+		aliasParts = append(aliasParts, args[1:]...)
+	}
+
+	return aliasParts, true, nil
+}
+
+// splitArgs splits a command string into arguments
+func splitArgs(cmd string) []string {
+	var args []string
+	var current string
+	inQuote := false
+	quoteChar := rune(0)
+
+	for _, r := range cmd {
+		switch {
+		case r == '"' || r == '\'':
+			if inQuote && r == quoteChar {
+				inQuote = false
+				quoteChar = 0
+			} else if !inQuote {
+				inQuote = true
+				quoteChar = r
+			} else {
+				current += string(r)
+			}
+		case r == ' ' && !inQuote:
+			if current != "" {
+				args = append(args, current)
+				current = ""
+			}
+		default:
+			current += string(r)
+		}
+	}
+
+	if current != "" {
+		args = append(args, current)
+	}
+
+	return args
+}

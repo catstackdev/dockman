@@ -40,7 +40,7 @@ var presetListCmd = &cobra.Command{
 		sort.Strings(names)
 
 		// Print presets
-		fmt.Println("\n📋 Available Presets:\n")
+		fmt.Print("\n📋 Available Presets:\n\n")
 		for _, name := range names {
 			p := presets[name]
 			fmt.Printf("  %s %s\n", output.FormatPresetName(name), output.Gray(fmt.Sprintf("(%v)", p.Services)))

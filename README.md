@@ -1,5 +1,9 @@
 # 🐳 Dockman
 
+[![CI](https://github.com/catstackdev/dockman/workflows/CI/badge.svg)](https://github.com/catstackdev/dockman/actions)
+[![Go Report Card](https://goreportcard.com/badge/github.com/catstackdev/dockman)](https://goreportcard.com/report/github.com/catstackdev/dockman)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Release](https://img.shields.io/github/v/release/catstackdev/dockman)](https://github.com/catstackdev/dockman/releases)
 Docker Compose manager with presets, shortcuts, and quality-of-life
 improvements.
 

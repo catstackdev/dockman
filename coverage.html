@@ -1,0 +1,2398 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>cmd: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">github.com/catstackdev/dockman/cmd/aliases.go (0.0%)</option>
+				
+				<option value="file1">github.com/catstackdev/dockman/cmd/build.go (0.0%)</option>
+				
+				<option value="file2">github.com/catstackdev/dockman/cmd/clean.go (0.0%)</option>
+				
+				<option value="file3">github.com/catstackdev/dockman/cmd/completion.go (0.0%)</option>
+				
+				<option value="file4">github.com/catstackdev/dockman/cmd/config.go (0.0%)</option>
+				
+				<option value="file5">github.com/catstackdev/dockman/cmd/down.go (0.0%)</option>
+				
+				<option value="file6">github.com/catstackdev/dockman/cmd/events.go (0.0%)</option>
+				
+				<option value="file7">github.com/catstackdev/dockman/cmd/exec.go (0.0%)</option>
+				
+				<option value="file8">github.com/catstackdev/dockman/cmd/info.go (0.0%)</option>
+				
+				<option value="file9">github.com/catstackdev/dockman/cmd/init.go (0.0%)</option>
+				
+				<option value="file10">github.com/catstackdev/dockman/cmd/kill.go (0.0%)</option>
+				
+				<option value="file11">github.com/catstackdev/dockman/cmd/list.go (0.0%)</option>
+				
+				<option value="file12">github.com/catstackdev/dockman/cmd/logs.go (0.0%)</option>
+				
+				<option value="file13">github.com/catstackdev/dockman/cmd/pause.go (0.0%)</option>
+				
+				<option value="file14">github.com/catstackdev/dockman/cmd/port.go (0.0%)</option>
+				
+				<option value="file15">github.com/catstackdev/dockman/cmd/preset.go (0.0%)</option>
+				
+				<option value="file16">github.com/catstackdev/dockman/cmd/ps.go (0.0%)</option>
+				
+				<option value="file17">github.com/catstackdev/dockman/cmd/pull.go (0.0%)</option>
+				
+				<option value="file18">github.com/catstackdev/dockman/cmd/restart.go (0.0%)</option>
+				
+				<option value="file19">github.com/catstackdev/dockman/cmd/root.go (0.0%)</option>
+				
+				<option value="file20">github.com/catstackdev/dockman/cmd/shortcuts.go (0.0%)</option>
+				
+				<option value="file21">github.com/catstackdev/dockman/cmd/stats.go (0.0%)</option>
+				
+				<option value="file22">github.com/catstackdev/dockman/cmd/up.go (0.0%)</option>
+				
+				<option value="file23">github.com/catstackdev/dockman/cmd/validate.go (0.0%)</option>
+				
+				<option value="file24">github.com/catstackdev/dockman/cmd/version.go (0.0%)</option>
+				
+				<option value="file25">github.com/catstackdev/dockman/internal/compose/executor.go (0.0%)</option>
+				
+				<option value="file26">github.com/catstackdev/dockman/internal/compose/finder.go (89.5%)</option>
+				
+				<option value="file27">github.com/catstackdev/dockman/internal/config/config.go (0.0%)</option>
+				
+				<option value="file28">github.com/catstackdev/dockman/internal/config/project.go (0.0%)</option>
+				
+				<option value="file29">github.com/catstackdev/dockman/internal/preset/manager.go (61.9%)</option>
+				
+				<option value="file30">github.com/catstackdev/dockman/main.go (0.0%)</option>
+				
+				<option value="file31">github.com/catstackdev/dockman/pkg/output/print.go (0.0%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">not covered</span>
+				<span class="cov8">covered</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package cmd
+
+import (
+        "fmt"
+        "sort"
+
+        "github.com/catstackdev/dockman/internal/config"
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/spf13/cobra"
+)
+
+var aliasesCmd = &amp;cobra.Command{
+        Use:     "aliases",
+        Short:   "List all custom aliases",
+        Long:    `Display all custom command aliases defined in .dockman.yml`,
+        Example: `  dockman aliases           # List all aliases`,
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                executor, err := getExecutor()
+                if err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">cfg, err := config.LoadProjectConfig(executor.ProjectDir)
+                if err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">if len(cfg.Aliases) == 0 </span><span class="cov0" title="0">{
+                        output.Warning("No aliases configured")
+                        output.Info("Run 'dockman init' or edit .dockman.yml to add aliases")
+                        return nil
+                }</span>
+
+                <span class="cov0" title="0">output.Box("Custom Aliases", []string{
+                        fmt.Sprintf("Found %d alias(es) in .dockman.yml", len(cfg.Aliases)),
+                })
+
+                // Sort aliases for consistent output
+                names := make([]string, 0, len(cfg.Aliases))
+                for name := range cfg.Aliases </span><span class="cov0" title="0">{
+                        names = append(names, name)
+                }</span>
+                <span class="cov0" title="0">sort.Strings(names)
+
+                // Display aliases
+                for _, name := range names </span><span class="cov0" title="0">{
+                        command := cfg.Aliases[name]
+                        fmt.Printf("  %s → dockman %s\n",
+                                output.Cyan(name),
+                                output.Gray(command))
+                }</span>
+                <span class="cov0" title="0">fmt.Println()
+
+                return nil</span>
+        },
+}
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package cmd
+
+import (
+        "fmt"
+
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/spf13/cobra"
+)
+
+var (
+        buildNoCache  bool
+        buildParallel bool
+        buildPull     bool
+)
+
+var buildCmd = &amp;cobra.Command{
+        Use:   "build [services...]",
+        Short: "Build or rebuild services",
+        Long:  `Build or rebuild service images defined in docker-compose.yml`,
+        Example: `  dockman build                # Build all services
+  dockman build api            # Build api service
+  dockman build --no-cache     # Build without cache
+  dockman build --pull         # Always pull newer base images`,
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                executor, err := getExecutor()
+                if err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">if len(args) == 0 </span><span class="cov0" title="0">{
+                        output.Info("Building all services...")
+                }</span> else<span class="cov0" title="0"> {
+                        output.Info(fmt.Sprintf("Building services: %v", args))
+                }</span>
+
+                <span class="cov0" title="0">if err := executor.Build(args, buildNoCache, buildParallel, buildPull); err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">output.Success("Build complete!")
+                return nil</span>
+        },
+}
+
+func init() <span class="cov0" title="0">{
+        buildCmd.Flags().BoolVar(&amp;buildNoCache, "no-cache", false, "Build without using cache")
+        buildCmd.Flags().BoolVar(&amp;buildParallel, "parallel", true, "Build images in parallel")
+        buildCmd.Flags().BoolVar(&amp;buildPull, "pull", false, "Always attempt to pull newer base images")
+}</span>
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">package cmd
+
+import (
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/spf13/cobra"
+)
+
+var (
+        cleanVolumes bool
+        cleanAll     bool
+)
+
+var cleanCmd = &amp;cobra.Command{
+        Use:   "clean",
+        Short: "Clean up Docker resources",
+        Long:  `Remove stopped containers, unused networks, and optionally volumes`,
+        Example: `  dockman clean              # Remove stopped containers
+  dockman clean -v           # Also remove volumes
+  dockman clean --all        # Remove everything (containers, volumes, images)`,
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                executor, err := getExecutor()
+                if err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">if cleanAll </span><span class="cov0" title="0">{
+                        output.Warning("Removing all containers, volumes, and images...")
+                        if err := executor.Clean(true, true); err != nil </span><span class="cov0" title="0">{
+                                output.Error(err.Error())
+                                return err
+                        }</span>
+                } else<span class="cov0" title="0"> if cleanVolumes </span><span class="cov0" title="0">{
+                        output.Info("Removing stopped containers and volumes...")
+                        if err := executor.Clean(true, false); err != nil </span><span class="cov0" title="0">{
+                                output.Error(err.Error())
+                                return err
+                        }</span>
+                } else<span class="cov0" title="0"> {
+                        output.Info("Removing stopped containers...")
+                        if err := executor.Clean(false, false); err != nil </span><span class="cov0" title="0">{
+                                output.Error(err.Error())
+                                return err
+                        }</span>
+                }
+
+                <span class="cov0" title="0">output.Success("Cleanup complete!")
+                return nil</span>
+        },
+}
+
+func init() <span class="cov0" title="0">{
+        cleanCmd.Flags().BoolVarP(&amp;cleanVolumes, "volumes", "v", false, "Also remove volumes")
+        cleanCmd.Flags().BoolVar(&amp;cleanAll, "all", false, "Remove everything (containers, volumes, images)")
+}</span>
+</pre>
+		
+		<pre class="file" id="file3" style="display: none">package cmd
+
+import (
+        "os"
+
+        "github.com/spf13/cobra"
+)
+
+var completionCmd = &amp;cobra.Command{
+        Use:   "completion [bash|zsh|fish]",
+        Short: "Generate shell completion script",
+        Long: `Generate shell completion script for dockman.
+
+To load completions:
+
+Bash:
+  $ source &lt;(dockman completion bash)
+  # To load permanently:
+  $ dockman completion bash &gt; /usr/local/etc/bash_completion.d/dockman
+
+Zsh:
+  $ source &lt;(dockman completion zsh)
+  # To load permanently:
+  $ dockman completion zsh &gt; "${fpath[1]}/_dockman"
+
+Fish:
+  $ dockman completion fish | source
+  # To load permanently:
+  $ dockman completion fish &gt; ~/.config/fish/completions/dockman.fish
+`,
+        DisableFlagsInUseLine: true,
+        ValidArgs:             []string{"bash", "zsh", "fish"},
+        Args:                  cobra.ExactValidArgs(1),
+        Run: func(cmd *cobra.Command, args []string) <span class="cov0" title="0">{
+                switch args[0] </span>{
+                case "bash":<span class="cov0" title="0">
+                        cmd.Root().GenBashCompletion(os.Stdout)</span>
+                case "zsh":<span class="cov0" title="0">
+                        cmd.Root().GenZshCompletion(os.Stdout)</span>
+                case "fish":<span class="cov0" title="0">
+                        cmd.Root().GenFishCompletion(os.Stdout, true)</span>
+                }
+        },
+}
+</pre>
+		
+		<pre class="file" id="file4" style="display: none">package cmd
+
+import (
+        "fmt"
+        "os"
+        "os/exec"
+
+        "github.com/catstackdev/dockman/internal/config"
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/spf13/cobra"
+        "gopkg.in/yaml.v3"
+)
+
+var (
+        configEdit bool
+        configPath bool
+)
+
+var configCmd = &amp;cobra.Command{
+        Use:   "config",
+        Short: "Show or edit project configuration",
+        Long:  `Display current .dockman.yml configuration or open it in editor`,
+        Example: `  dockman config            # Show current config
+  dockman config --edit     # Open in $EDITOR
+  dockman config --path     # Show config file path`,
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                executor, err := getExecutor()
+                if err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">projectDir := executor.ProjectDir
+                cfgPath := fmt.Sprintf("%s/.dockman.yml", projectDir)
+
+                // Show path only
+                if configPath </span><span class="cov0" title="0">{
+                        fmt.Println(cfgPath)
+                        return nil
+                }</span>
+
+                // Edit config
+                <span class="cov0" title="0">if configEdit </span><span class="cov0" title="0">{
+                        editor := os.Getenv("EDITOR")
+                        if editor == "" </span><span class="cov0" title="0">{
+                                editor = "vim"
+                        }</span>
+
+                        // Check if file exists, create if not
+                        <span class="cov0" title="0">if _, err := os.Stat(cfgPath); os.IsNotExist(err) </span><span class="cov0" title="0">{
+                                output.Warning("Config doesn't exist. Run 'dockman init' first.")
+                                return nil
+                        }</span>
+
+                        <span class="cov0" title="0">output.Info(fmt.Sprintf("Opening %s in %s...", cfgPath, editor))
+
+                        // Open in editor using exec package
+                        cmd := exec.Command(editor, cfgPath)
+                        cmd.Stdin = os.Stdin
+                        cmd.Stdout = os.Stdout
+                        cmd.Stderr = os.Stderr
+
+                        if err := cmd.Run(); err != nil </span><span class="cov0" title="0">{
+                                output.Error(fmt.Sprintf("Failed to open editor: %v", err))
+                                return err
+                        }</span>
+
+                        <span class="cov0" title="0">output.Success("Config updated!")
+                        return nil</span>
+                }
+
+                // Show config
+                <span class="cov0" title="0">cfg, err := config.LoadProjectConfig(projectDir)
+                if err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                // Check if config exists
+                <span class="cov0" title="0">if _, err := os.Stat(cfgPath); os.IsNotExist(err) </span><span class="cov0" title="0">{
+                        output.Warning("No .dockman.yml found in project")
+                        output.Info("Run 'dockman init' to create one")
+                        return nil
+                }</span>
+
+                // Display config
+                <span class="cov0" title="0">output.Box("Project Configuration", []string{
+                        fmt.Sprintf("Location: %s", cfgPath),
+                        "",
+                        "Settings:",
+                        fmt.Sprintf("  Default Preset: %s", valueOrEmpty(cfg.DefaultPreset)),
+                        fmt.Sprintf("  Auto Pull:      %v", cfg.AutoPull),
+                        fmt.Sprintf("  Compose File:   %s", valueOrEmpty(cfg.ComposeFile)),
+                        fmt.Sprintf("  Aliases:        %d", len(cfg.Aliases)),
+                })
+
+                if len(cfg.Aliases) &gt; 0 </span><span class="cov0" title="0">{
+                        fmt.Println("Aliases:")
+                        for name, cmd := range cfg.Aliases </span><span class="cov0" title="0">{
+                                fmt.Printf("  %s → %s\n",
+                                        output.Cyan(name),
+                                        output.Gray(cmd))
+                        }</span>
+                        <span class="cov0" title="0">fmt.Println()</span>
+                }
+
+                // Show raw YAML
+                <span class="cov0" title="0">data, _ := yaml.Marshal(cfg)
+                fmt.Println("Raw YAML:")
+                fmt.Println(output.Gray(string(data)))
+
+                return nil</span>
+        },
+}
+
+func init() <span class="cov0" title="0">{
+        configCmd.Flags().BoolVarP(&amp;configEdit, "edit", "e", false, "Open config in $EDITOR")
+        configCmd.Flags().BoolVarP(&amp;configPath, "path", "p", false, "Show config file path only")
+}</span>
+
+func valueOrEmpty(s string) string <span class="cov0" title="0">{
+        if s == "" </span><span class="cov0" title="0">{
+                return output.Gray("(default)")
+        }</span>
+        <span class="cov0" title="0">return s</span>
+}
+</pre>
+		
+		<pre class="file" id="file5" style="display: none">package cmd
+
+import (
+        "github.com/catstackdev/dockman/internal/compose"
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/spf13/cobra"
+)
+
+var downCmd = &amp;cobra.Command{
+        Use:     "down",
+        Aliases: []string{"d", "stop"},
+        Short:   "Stop all services",
+        Long:    `Stop and remove all containers defined in docker-compose.yml`,
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                executor, err := compose.NewExecutor()
+                if err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">if err := executor.Down(); err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">output.Success("All services stopped!")
+                return nil</span>
+        },
+}
+</pre>
+		
+		<pre class="file" id="file6" style="display: none">package cmd
+
+import (
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/spf13/cobra"
+)
+
+var eventsCmd = &amp;cobra.Command{
+        Use:   "events",
+        Short: "Receive real-time events from containers",
+        Long:  `Stream container events (start, stop, die, etc.) in real-time`,
+        Example: `  dockman events            # Watch all events
+  # Press Ctrl+C to stop`,
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                executor, err := getExecutor()
+                if err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">output.Info("Watching container events (Ctrl+C to stop)...")
+
+                if err := executor.Events(); err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">return nil</span>
+        },
+}
+</pre>
+		
+		<pre class="file" id="file7" style="display: none">package cmd
+
+import (
+        "fmt"
+
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/spf13/cobra"
+)
+
+var execCmd = &amp;cobra.Command{
+        Use:     "exec &lt;service&gt; [command]",
+        Aliases: []string{"e", "sh"},
+        Short:   "Execute command in a service container",
+        Long:    `Execute a command in a running service container. Defaults to /bin/sh if no command specified.`,
+        Example: `  dockman exec api              # Open shell in api container
+  dockman exec api npm test     # Run npm test in api
+  dockman exec postgres psql    # Open psql in postgres`,
+        Args: cobra.MinimumNArgs(1),
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                executor, err := getExecutor()
+                if err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">service := args[0]
+                command := []string{"/bin/sh"}
+
+                if len(args) &gt; 1 </span><span class="cov0" title="0">{
+                        command = args[1:]
+                }</span>
+
+                <span class="cov0" title="0">output.Info(fmt.Sprintf("Executing in %s: %v", service, command))
+                if err := executor.Exec(service, command); err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">return nil</span>
+        },
+}
+</pre>
+		
+		<pre class="file" id="file8" style="display: none">package cmd
+
+import (
+        "fmt"
+
+        "github.com/catstackdev/dockman/internal/compose"
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/spf13/cobra"
+)
+
+var infoCmd = &amp;cobra.Command{
+        Use:   "info",
+        Short: "Show project information",
+        Long:  `Display information about detected docker-compose project`,
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                executor, err := compose.NewExecutor()
+                if err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">fmt.Print("\n📦 Project Information:\n\n")
+                fmt.Println(executor.GetInfo())
+                fmt.Println()
+
+                return nil</span>
+        },
+}
+</pre>
+		
+		<pre class="file" id="file9" style="display: none">package cmd
+
+import (
+        "fmt"
+        "os"
+        "strings"
+
+        "github.com/catstackdev/dockman/internal/config"
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/manifoldco/promptui"
+        "github.com/spf13/cobra"
+)
+
+var initForce bool
+
+var initCmd = &amp;cobra.Command{
+        Use:   "init",
+        Short: "Initialize dockman config for current project",
+        Long:  `Create a .dockman.yml config file in the current project directory with interactive setup`,
+        Example: `  dockman init              # Interactive setup
+  dockman init --force      # Overwrite existing config`,
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                executor, err := getExecutor()
+                if err != nil </span><span class="cov0" title="0">{
+                        output.ErrorWithHelp(
+                                "No docker-compose.yml found in current or parent directories",
+                                "Make sure you're in a directory with docker-compose.yml",
+                        )
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">projectDir := executor.ProjectDir
+                configPath := fmt.Sprintf("%s/.dockman.yml", projectDir)
+
+                // Check if config already exists
+                if !initForce </span><span class="cov0" title="0">{
+                        if _, err := os.Stat(configPath); err == nil </span><span class="cov0" title="0">{
+                                output.Warning(fmt.Sprintf("Config already exists at %s", configPath))
+
+                                prompt := promptui.Prompt{
+                                        Label:     "Overwrite existing config",
+                                        IsConfirm: true,
+                                        Default:   "n",
+                                }
+
+                                result, err := prompt.Run()
+                                if err != nil || (result != "y" &amp;&amp; result != "Y") </span><span class="cov0" title="0">{
+                                        output.Info("Init cancelled. Use --force to overwrite.")
+                                        return nil
+                                }</span>
+                        }
+                }
+
+                // Start interactive setup
+                <span class="cov0" title="0">output.Info("Let's set up dockman for your project!\n")
+
+                cfg := &amp;config.ProjectConfig{
+                        Aliases: make(map[string]string),
+                }
+
+                // 1. Default preset
+                output.Info("Step 1: Default Preset")
+                fmt.Println("  Which preset should 'dockman up' use by default?")
+                fmt.Println("  (Leave empty to start all services)")
+
+                presetPrompt := promptui.Prompt{
+                        Label:   "Default preset",
+                        Default: "",
+                }
+                preset, _ := presetPrompt.Run()
+                if preset != "" </span><span class="cov0" title="0">{
+                        cfg.DefaultPreset = preset
+                }</span>
+
+                // 2. Auto-pull
+                <span class="cov0" title="0">fmt.Println()
+                output.Info("Step 2: Auto Pull")
+                fmt.Println("  Should images be checked/pulled automatically on 'dockman up'?")
+
+                autoPullPrompt := promptui.Prompt{
+                        Label:     "Auto-pull images",
+                        IsConfirm: true,
+                        Default:   "n",
+                }
+                autoPull, _ := autoPullPrompt.Run()
+                cfg.AutoPull = (autoPull == "y" || autoPull == "Y")
+
+                // 3. Custom compose file
+                fmt.Println()
+                output.Info("Step 3: Compose File (Optional)")
+                fmt.Println("  Using a non-standard compose file name?")
+                fmt.Println("  (Default: docker-compose.yml)")
+
+                composePrompt := promptui.Prompt{
+                        Label:   "Compose file path",
+                        Default: "",
+                }
+                composePath, _ := composePrompt.Run()
+                if composePath != "" </span><span class="cov0" title="0">{
+                        cfg.ComposeFile = composePath
+                }</span>
+
+                // 4. Aliases
+                <span class="cov0" title="0">fmt.Println()
+                output.Info("Step 4: Aliases (Optional)")
+                fmt.Println("  Create custom command shortcuts?")
+                fmt.Println("  Create custom command shortcuts?")
+                fmt.Println("  Examples:")
+                fmt.Println("    db   → up postgres redis")
+                fmt.Println("    api  → up api postgres")
+                fmt.Println("    dev  → up")
+                fmt.Println()
+
+                aliasPrompt := promptui.Prompt{
+                        Label:     "Add aliases",
+                        IsConfirm: true,
+                        Default:   "n",
+                }
+                addAliases, _ := aliasPrompt.Run()
+
+                if addAliases == "y" || addAliases == "Y" </span><span class="cov0" title="0">{
+                        for </span><span class="cov0" title="0">{
+                                namePrompt := promptui.Prompt{
+                                        Label: "Alias name (empty to finish)",
+                                }
+                                name, _ := namePrompt.Run()
+                                name = strings.TrimSpace(name)
+
+                                if name == "" </span><span class="cov0" title="0">{
+                                        break</span>
+                                }
+
+                                <span class="cov0" title="0">cmdPrompt := promptui.Prompt{
+                                        Label: fmt.Sprintf("Command for '%s'", name),
+                                }
+                                command, _ := cmdPrompt.Run()
+                                command = strings.TrimSpace(command)
+
+                                if command != "" </span><span class="cov0" title="0">{
+                                        cfg.Aliases[name] = command
+                                        output.Success(fmt.Sprintf("Added: dockman %s → dockman %s", name, command))
+                                }</span>
+                        }
+                }
+
+                // Save config
+                <span class="cov0" title="0">if err := config.SaveProjectConfig(projectDir, cfg); err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                // Show summary
+                <span class="cov0" title="0">fmt.Println()
+                output.Box("Configuration Created!", []string{
+                        fmt.Sprintf("Location: %s", configPath),
+                        "",
+                        "Settings:",
+                        fmt.Sprintf("  Default Preset: %s", valueOrNone(cfg.DefaultPreset)),
+                        fmt.Sprintf("  Auto Pull:      %v", cfg.AutoPull),
+                        fmt.Sprintf("  Compose File:   %s", valueOrNone(cfg.ComposeFile)),
+                        fmt.Sprintf("  Aliases:        %d", len(cfg.Aliases)),
+                })
+
+                // Show example usage
+                if len(cfg.Aliases) &gt; 0 </span><span class="cov0" title="0">{
+                        fmt.Println("Your custom aliases:")
+                        for name, cmd := range cfg.Aliases </span><span class="cov0" title="0">{
+                                fmt.Printf("  dockman %s → dockman %s\n",
+                                        output.Cyan(name),
+                                        output.Gray(cmd))
+                        }</span>
+                }
+
+                <span class="cov0" title="0">fmt.Println()
+                output.Info("Edit .dockman.yml anytime to update settings")
+
+                return nil</span>
+        },
+}
+
+func init() <span class="cov0" title="0">{
+        initCmd.Flags().BoolVarP(&amp;initForce, "force", "f", false, "Overwrite existing config without prompting")
+}</span>
+
+func valueOrNone(s string) string <span class="cov0" title="0">{
+        if s == "" </span><span class="cov0" title="0">{
+                return output.Gray("(none)")
+        }</span>
+        <span class="cov0" title="0">return s</span>
+}
+</pre>
+		
+		<pre class="file" id="file10" style="display: none">package cmd
+
+import (
+        "fmt"
+
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/spf13/cobra"
+)
+
+var killSignal string
+
+var killCmd = &amp;cobra.Command{
+        Use:   "kill [services...]",
+        Short: "Force stop services",
+        Long:  `Kill running services by sending SIGKILL (or custom signal)`,
+        Example: `  dockman kill api          # Kill api service
+  dockman kill -s SIGTERM   # Send SIGTERM instead`,
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                executor, err := getExecutor()
+                if err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">if len(args) == 0 </span><span class="cov0" title="0">{
+                        output.Warning("Killing all services...")
+                }</span> else<span class="cov0" title="0"> {
+                        output.Warning(fmt.Sprintf("Killing services: %v", args))
+                }</span>
+
+                <span class="cov0" title="0">if err := executor.Kill(args, killSignal); err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">output.Success("Services killed!")
+                return nil</span>
+        },
+}
+
+func init() <span class="cov0" title="0">{
+        killCmd.Flags().StringVarP(&amp;killSignal, "signal", "s", "SIGKILL", "Signal to send")
+}</span>
+</pre>
+		
+		<pre class="file" id="file11" style="display: none">package cmd
+
+import (
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/spf13/cobra"
+)
+
+var listCmd = &amp;cobra.Command{
+        Use:     "list",
+        Aliases: []string{"ls", "services"},
+        Short:   "List all services in docker-compose.yml",
+        Long:    `Display all services defined in the docker-compose.yml file`,
+        Example: `  dockman list              # List all services
+  dockman ls                # Alias for list`,
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                executor, err := getExecutor()
+                if err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">output.Info("Services defined in docker-compose.yml:")
+                if err := executor.ListServices(); err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">return nil</span>
+        },
+}
+</pre>
+		
+		<pre class="file" id="file12" style="display: none">// cmd/logs.go
+package cmd
+
+import (
+        "github.com/catstackdev/dockman/internal/compose"
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/spf13/cobra"
+)
+
+var follow bool // flag for -f
+
+var logsCmd = &amp;cobra.Command{
+        Use:     "logs [services...]",
+        Aliases: []string{"l"},
+        Short:   "View service logs",
+        Long:    `View logs from one or more services`,
+        Example: `  dockman logs           # View all logs
+  dockman logs api -f    # Follow API logs
+  dockman logs api postgres  # View specific services`,
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                executor, err := compose.NewExecutor()
+                if err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">if err := executor.Logs(args, follow); err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">return nil</span>
+        },
+}
+
+func init() <span class="cov0" title="0">{
+        // Add -f flag to logs command
+        logsCmd.Flags().BoolVarP(&amp;follow, "follow", "f", false, "Follow log output")
+}</span>
+</pre>
+		
+		<pre class="file" id="file13" style="display: none">package cmd
+
+import (
+        "fmt"
+
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/spf13/cobra"
+)
+
+var pauseCmd = &amp;cobra.Command{
+        Use:   "pause [services...]",
+        Short: "Pause services",
+        Long:  `Pause running services (freeze processes)`,
+        Example: `  dockman pause api         # Pause api service
+  dockman pause              # Pause all services`,
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                executor, err := getExecutor()
+                if err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">if len(args) == 0 </span><span class="cov0" title="0">{
+                        output.Info("Pausing all services...")
+                }</span> else<span class="cov0" title="0"> {
+                        output.Info(fmt.Sprintf("Pausing services: %v", args))
+                }</span>
+
+                <span class="cov0" title="0">if err := executor.Pause(args); err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">output.Success("Services paused!")
+                return nil</span>
+        },
+}
+
+var unpauseCmd = &amp;cobra.Command{
+        Use:   "unpause [services...]",
+        Short: "Unpause services",
+        Long:  `Unpause paused services`,
+        Example: `  dockman unpause api       # Unpause api service
+  dockman unpause            # Unpause all services`,
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                executor, err := getExecutor()
+                if err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">if len(args) == 0 </span><span class="cov0" title="0">{
+                        output.Info("Unpausing all services...")
+                }</span> else<span class="cov0" title="0"> {
+                        output.Info(fmt.Sprintf("Unpausing services: %v", args))
+                }</span>
+
+                <span class="cov0" title="0">if err := executor.Unpause(args); err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">output.Success("Services unpaused!")
+                return nil</span>
+        },
+}
+</pre>
+		
+		<pre class="file" id="file14" style="display: none">package cmd
+
+import (
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/spf13/cobra"
+)
+
+var portCmd = &amp;cobra.Command{
+        Use:   "port [service] [private_port]",
+        Short: "Show public port for a port binding",
+        Long:  `Print the public port for a port binding`,
+        Example: `  dockman port api 3000     # Show public port for api:3000
+  dockman port postgres     # Show all ports for postgres`,
+        Args: cobra.MinimumNArgs(1),
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                executor, err := getExecutor()
+                if err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">service := args[0]
+                privatePort := ""
+
+                if len(args) &gt; 1 </span><span class="cov0" title="0">{
+                        privatePort = args[1]
+                }</span>
+
+                <span class="cov0" title="0">if err := executor.Port(service, privatePort); err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">return nil</span>
+        },
+}
+</pre>
+		
+		<pre class="file" id="file15" style="display: none">package cmd
+
+import (
+        "fmt"
+        "sort"
+
+        "github.com/catstackdev/dockman/internal/preset"
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/spf13/cobra"
+)
+
+var presetCmd = &amp;cobra.Command{
+        Use:   "preset",
+        Short: "Manage presets",
+        Long:  `List and manage service presets`,
+}
+
+var presetListCmd = &amp;cobra.Command{
+        Use:   "list",
+        Short: "List all presets",
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                presetMgr, err := preset.NewManager()
+                if err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">presets := presetMgr.GetAll()
+
+                if len(presets) == 0 </span><span class="cov0" title="0">{
+                        output.Warning("No presets configured")
+                        return nil
+                }</span>
+
+                // Sort preset names
+                <span class="cov0" title="0">names := make([]string, 0, len(presets))
+                for name := range presets </span><span class="cov0" title="0">{
+                        names = append(names, name)
+                }</span>
+                <span class="cov0" title="0">sort.Strings(names)
+
+                // Print presets
+                fmt.Print("\n📋 Available Presets:\n\n")
+                for _, name := range names </span><span class="cov0" title="0">{
+                        p := presets[name]
+                        fmt.Printf("  %s %s\n", output.FormatPresetName(name), output.Gray(fmt.Sprintf("(%v)", p.Services)))
+                        if p.Description != "" </span><span class="cov0" title="0">{
+                                fmt.Printf("    %s\n", output.Gray(p.Description))
+                        }</span>
+                }
+                <span class="cov0" title="0">fmt.Println()
+
+                return nil</span>
+        },
+}
+
+func init() <span class="cov0" title="0">{
+        presetCmd.AddCommand(presetListCmd)
+}</span>
+</pre>
+		
+		<pre class="file" id="file16" style="display: none">package cmd
+
+import (
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/spf13/cobra"
+)
+
+var psQuiet bool
+
+var psCmd = &amp;cobra.Command{
+        Use:   "ps",
+        Short: "List containers",
+        Long:  `Show status of all containers defined in docker-compose.yml`,
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                executor, err := getExecutor()
+                if err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">if psQuiet </span><span class="cov0" title="0">{
+                        if err := executor.PsQuiet(); err != nil </span><span class="cov0" title="0">{
+                                output.Error(err.Error())
+                                return err
+                        }</span>
+                } else<span class="cov0" title="0"> {
+                        if err := executor.Ps(); err != nil </span><span class="cov0" title="0">{
+                                output.Error(err.Error())
+                                return err
+                        }</span>
+                }
+
+                <span class="cov0" title="0">return nil</span>
+        },
+}
+
+func init() <span class="cov0" title="0">{
+        psCmd.Flags().BoolVarP(&amp;psQuiet, "quiet", "q", false, "Only show container IDs")
+}</span>
+</pre>
+		
+		<pre class="file" id="file17" style="display: none">package cmd
+
+import (
+        "fmt"
+
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/manifoldco/promptui"
+        "github.com/spf13/cobra"
+)
+
+var (
+        pullForce bool
+        pullCheck bool
+)
+
+var pullCmd = &amp;cobra.Command{
+        Use:   "pull [services...]",
+        Short: "Pull service images",
+        Long: `Pull service images from registry with confirmation.
+        
+Docker Compose checks image digests and only downloads updates.
+Use -f to skip confirmation prompt.`,
+        Example: `  dockman pull              # Pull with confirmation
+  dockman pull -f           # Pull without confirmation
+  dockman pull api -f       # Pull specific service
+  dockman pull --check      # Show configured images`,
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                executor, err := getExecutor()
+                if err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                // Check mode
+                <span class="cov0" title="0">if pullCheck </span><span class="cov0" title="0">{
+                        output.Info("Configured images in docker-compose.yml:")
+                        if err := executor.ShowImages(args); err != nil </span><span class="cov0" title="0">{
+                                output.Error(err.Error())
+                                return err
+                        }</span>
+                        <span class="cov0" title="0">return nil</span>
+                }
+
+                // Determine what we're pulling
+                <span class="cov0" title="0">services := "all services"
+                if len(args) &gt; 0 </span><span class="cov0" title="0">{
+                        services = fmt.Sprintf("%v", args)
+                }</span>
+
+                // Interactive confirmation if not forced
+                <span class="cov0" title="0">if !pullForce </span><span class="cov0" title="0">{
+                        // Enhanced prompt with colors
+                        prompt := promptui.Prompt{
+                                Label: fmt.Sprintf("Pull latest images for %s? Docker will only download if updates are available",
+                                        output.Cyan(services)),
+                                IsConfirm: true,
+                                Default:   "n",
+                        }
+
+                        result, err := prompt.Run()
+                        if err != nil || (result != "y" &amp;&amp; result != "Y") </span><span class="cov0" title="0">{
+                                output.Info("Pull cancelled")
+                                return nil
+                        }</span>
+
+                        <span class="cov0" title="0">fmt.Println()</span> // Empty line for better readability
+                }
+
+                // Pull images
+                <span class="cov0" title="0">if len(args) == 0 </span><span class="cov0" title="0">{
+                        output.Info("Checking for image updates (all services)...")
+                }</span> else<span class="cov0" title="0"> {
+                        output.Info(fmt.Sprintf("Checking for updates: %v", args))
+                }</span>
+
+                <span class="cov0" title="0">if err := executor.Pull(args); err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">output.Success("Image pull complete!")
+                return nil</span>
+        },
+}
+
+func init() <span class="cov0" title="0">{
+        pullCmd.Flags().BoolVarP(&amp;pullForce, "force", "f", false, "Skip confirmation prompt")
+        pullCmd.Flags().BoolVar(&amp;pullCheck, "check", false, "Show configured images without pulling")
+}</span>
+</pre>
+		
+		<pre class="file" id="file18" style="display: none">package cmd
+
+import (
+        "github.com/catstackdev/dockman/internal/compose"
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/spf13/cobra"
+)
+
+var restartCmd = &amp;cobra.Command{
+        Use:     "restart [services...]",
+        Aliases: []string{"r"},
+        Short:   "Restart services",
+        Long:    `Restart one or more services`,
+        Example: `  dockman restart api        # Restart API
+  dockman restart             # Restart all`,
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                executor, err := compose.NewExecutor()
+                if err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">output.Info("Restarting services...")
+                if err := executor.Restart(args); err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">output.Success("Services restarted!")
+                return nil</span>
+        },
+}
+</pre>
+		
+		<pre class="file" id="file19" style="display: none">// cmd/root.go
+package cmd
+
+import (
+        "fmt"
+        "os"
+        "strings"
+
+        "github.com/catstackdev/dockman/internal/compose"
+        "github.com/catstackdev/dockman/internal/config"
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/spf13/cobra"
+)
+
+var composeFile string
+
+//        var rootCmd = &amp;cobra.Command{
+//                Use:   "dockman",
+//                Short: "Docker Compose manager with presets",
+//                Long: `Dockman is a CLI tool that makes docker-compose easier to use.
+//
+// It provides shortcuts, presets, and better log viewing.`,
+//
+//                Example: `  dockman up dev           # Start dev preset
+//          dockman logs api -f      # Follow API logs
+//          dockman d                # Alias for 'down'
+//          dockman db               # Custom alias from .dockman.yml`,
+//                // Handle unknown commands as potential aliases
+//                SilenceErrors: true,
+//                SilenceUsage:  true,
+//        }
+var rootCmd = &amp;cobra.Command{
+        Use:   "dockman",
+        Short: "Docker Compose manager with presets",
+        Long: `Dockman is a CLI tool that makes docker-compose easier to use.
+It provides shortcuts, presets, and better log viewing.
+
+Common Commands:
+  up, down, logs, restart, exec, ps
+  
+Service Management:
+  build, pull, pause, unpause, kill
+  
+Utilities:
+  list, port, events, stats, config
+  
+Custom Shortcuts:
+  Define aliases in .dockman.yml`,
+        Example: `  dockman up dev           # Start dev preset
+  dockman logs api -f      # Follow API logs
+  dockman build --no-cache # Rebuild images
+  dockman db               # Custom alias from .dockman.yml`,
+        SilenceErrors: true,
+        SilenceUsage:  true,
+}
+
+// Execute runs the CLI with alias resolution
+func Execute() <span class="cov0" title="0">{
+        // Check for aliases before executing
+        if len(os.Args) &gt; 1 </span><span class="cov0" title="0">{
+                if resolvedArgs := tryResolveAlias(os.Args[1:]); resolvedArgs != nil </span><span class="cov0" title="0">{
+                        // Replace args with resolved alias
+                        os.Args = append([]string{os.Args[0]}, resolvedArgs...)
+                }</span>
+        }
+
+        <span class="cov0" title="0">if err := rootCmd.Execute(); err != nil </span><span class="cov0" title="0">{
+                fmt.Fprintln(os.Stderr, err)
+                os.Exit(1)
+        }</span>
+}
+
+func init() <span class="cov0" title="0">{
+        // Global flag
+        rootCmd.PersistentFlags().StringVar(&amp;composeFile, "file", "", "Specify docker-compose file path")
+
+        // Register all commands
+        rootCmd.AddCommand(upCmd)
+        rootCmd.AddCommand(downCmd)
+        rootCmd.AddCommand(logsCmd)
+        rootCmd.AddCommand(presetCmd)
+        rootCmd.AddCommand(psCmd)
+        rootCmd.AddCommand(restartCmd)
+        rootCmd.AddCommand(infoCmd)
+        rootCmd.AddCommand(cleanCmd)
+        rootCmd.AddCommand(execCmd)
+        rootCmd.AddCommand(pullCmd)
+        rootCmd.AddCommand(versionCmd)
+        rootCmd.AddCommand(completionCmd)
+        rootCmd.AddCommand(statsCmd)
+        rootCmd.AddCommand(initCmd)
+        rootCmd.AddCommand(listCmd)
+        rootCmd.AddCommand(configCmd)
+        rootCmd.AddCommand(validateCmd)
+        rootCmd.AddCommand(aliasesCmd)
+        rootCmd.AddCommand(portCmd)
+        rootCmd.AddCommand(buildCmd)
+        rootCmd.AddCommand(eventsCmd)
+        rootCmd.AddCommand(pauseCmd)
+        rootCmd.AddCommand(unpauseCmd)
+        rootCmd.AddCommand(killCmd)
+}</span>
+
+// tryResolveAlias attempts to resolve command as an alias
+func tryResolveAlias(args []string) []string <span class="cov0" title="0">{
+        if len(args) == 0 </span><span class="cov0" title="0">{
+                return nil
+        }</span>
+
+        // Try to get project directory
+        <span class="cov0" title="0">executor, err := compose.NewExecutor()
+        if err != nil </span><span class="cov0" title="0">{
+                // No compose file, can't load aliases
+                return nil
+        }</span>
+
+        // Load project config
+        <span class="cov0" title="0">cfg, err := config.LoadProjectConfig(executor.ProjectDir)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil
+        }</span>
+
+        // Check if first arg is an alias
+        <span class="cov0" title="0">commandName := args[0]
+        aliasCommand, exists := cfg.Aliases[commandName]
+
+        if !exists </span><span class="cov0" title="0">{
+                return nil
+        }</span>
+
+        // Show what alias is doing
+        <span class="cov0" title="0">output.Info(fmt.Sprintf("Alias '%s' → dockman %s",
+                output.Cyan(commandName),
+                output.Gray(aliasCommand)))
+
+        // Parse alias command
+        aliasArgs := strings.Fields(aliasCommand)
+
+        // Append remaining args from original command
+        if len(args) &gt; 1 </span><span class="cov0" title="0">{
+                aliasArgs = append(aliasArgs, args[1:]...)
+        }</span>
+
+        <span class="cov0" title="0">return aliasArgs</span>
+}
+
+// getExecutor returns executor with optional file override
+func getExecutor() (*compose.Executor, error) <span class="cov0" title="0">{
+        if composeFile != "" </span><span class="cov0" title="0">{
+                return compose.NewExecutorWithFile(composeFile)
+        }</span>
+        <span class="cov0" title="0">return compose.NewExecutor()</span>
+}
+</pre>
+		
+		<pre class="file" id="file20" style="display: none">package cmd
+
+import (
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/spf13/cobra"
+)
+
+// Quick shortcuts for common operations
+
+var stopCmd = &amp;cobra.Command{
+        Use:    "stop [services...]",
+        Hidden: true, // Hide from main help (it's an alias)
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                return downCmd.RunE(cmd, args)
+        }</span>,
+}
+
+var startCmd = &amp;cobra.Command{
+        Use:    "start [services...]",
+        Hidden: true,
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                return upCmd.RunE(cmd, args)
+        }</span>,
+}
+
+var shCmd = &amp;cobra.Command{
+        Use:    "sh &lt;service&gt;",
+        Hidden: true,
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                if len(args) == 0 </span><span class="cov0" title="0">{
+                        output.Error("Service name required")
+                        return nil
+                }</span>
+                <span class="cov0" title="0">return execCmd.RunE(cmd, args)</span>
+        },
+}
+</pre>
+		
+		<pre class="file" id="file21" style="display: none">package cmd
+
+import (
+        "fmt"
+
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/spf13/cobra"
+)
+
+var statsNoStream bool
+
+var statsCmd = &amp;cobra.Command{
+        Use:     "stats [services...]",
+        Aliases: []string{"top"},
+        Short:   "Show container resource usage statistics",
+        Long:    `Display live resource usage statistics for running containers (CPU, memory, network, disk I/O)`,
+        Example: `  dockman stats              # Show stats for all containers
+  dockman stats api          # Show stats for api container
+  dockman stats --no-stream  # Show stats once, don't stream`,
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                executor, err := getExecutor()
+                if err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">if len(args) == 0 </span><span class="cov0" title="0">{
+                        output.Info("Showing resource usage for all containers (Ctrl+C to exit)...")
+                }</span> else<span class="cov0" title="0"> {
+                        output.Info(fmt.Sprintf("Showing resource usage for: %v", args))
+                }</span>
+
+                <span class="cov0" title="0">if err := executor.Stats(args, statsNoStream); err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">return nil</span>
+        },
+}
+
+func init() <span class="cov0" title="0">{
+        statsCmd.Flags().BoolVar(&amp;statsNoStream, "no-stream", false, "Disable streaming stats and only pull the first result")
+}</span>
+</pre>
+		
+		<pre class="file" id="file22" style="display: none">// cmd/up.go
+package cmd
+
+import (
+        "fmt"
+
+        "github.com/catstackdev/dockman/internal/preset"
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/spf13/cobra"
+)
+
+var (
+        upEnvFile string
+        upCmd     = &amp;cobra.Command{
+                Use:     "up [preset|services...]",
+                Aliases: []string{"u", "start"},
+                Short:   "Start services or preset",
+                Long:    `Start one or more services, or use a preset to start a group of services`,
+                Example: `  dockman up dev              # Start 'dev' preset
+  dockman up                  # Start all services
+  dockman up api postgres     # Start specific services`,
+                RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                        // Create executor (will auto-find docker-compose.yml)
+                        executor, err := getExecutor()
+                        if err != nil </span><span class="cov0" title="0">{
+                                output.Error(err.Error())
+                                output.Warning("Make sure you're in a directory with docker-compose.yml or one of its parent directories")
+                                return err
+                        }</span>
+
+                        // Load preset manager
+                        <span class="cov0" title="0">presetMgr, err := preset.NewManager()
+                        if err != nil </span><span class="cov0" title="0">{
+                                output.Warning(fmt.Sprintf("Failed to load presets: %v", err))
+                                // Continue without presets
+                        }</span>
+
+                        <span class="cov0" title="0">var services []string
+
+                        // Check if first arg is a preset
+                        if len(args) == 1 &amp;&amp; presetMgr != nil &amp;&amp; presetMgr.Exists(args[0]) </span><span class="cov0" title="0">{
+                                presetName := args[0]
+                                p, err := presetMgr.Get(presetName)
+                                if err != nil </span><span class="cov0" title="0">{
+                                        output.Error(err.Error())
+                                        return err
+                                }</span>
+
+                                <span class="cov0" title="0">services = p.Services
+                                output.Info(fmt.Sprintf("Using preset '%s': %v", presetName, services))</span>
+                        } else<span class="cov0" title="0"> {
+                                // Use services directly from args
+                                services = args
+                        }</span>
+
+                        // Start services
+                        // if err := executor.Up(services); err != nil {
+                        //         output.Error(err.Error())
+                        //         return err
+                        // }
+                        <span class="cov0" title="0">if err := executor.UpWithEnv(services, upEnvFile); err != nil </span><span class="cov0" title="0">{
+                                output.Error(err.Error())
+                                return err
+                        }</span>
+
+                        <span class="cov0" title="0">output.Success("Services started successfully!")
+                        return nil</span>
+                },
+        }
+)
+
+func init() <span class="cov0" title="0">{
+        upCmd.Flags().StringVar(&amp;upEnvFile, "env-file", "", "Specify environment file")
+}</span>
+</pre>
+		
+		<pre class="file" id="file23" style="display: none">package cmd
+
+import (
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/spf13/cobra"
+)
+
+var validateCmd = &amp;cobra.Command{
+        Use:     "validate",
+        Aliases: []string{"check"},
+        Short:   "Validate docker-compose.yml syntax",
+        Long:    `Check if docker-compose.yml has valid syntax and configuration`,
+        Example: `  dockman validate          # Check compose file
+  dockman check             # Alias for validate`,
+        RunE: func(cmd *cobra.Command, args []string) error <span class="cov0" title="0">{
+                executor, err := getExecutor()
+                if err != nil </span><span class="cov0" title="0">{
+                        output.Error(err.Error())
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">output.Info("Validating docker-compose.yml...")
+
+                if err := executor.Validate(); err != nil </span><span class="cov0" title="0">{
+                        output.Error("Validation failed!")
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">output.Success("docker-compose.yml is valid!")
+                return nil</span>
+        },
+}
+</pre>
+		
+		<pre class="file" id="file24" style="display: none">package cmd
+
+import (
+        "fmt"
+        "runtime"
+
+        "github.com/catstackdev/dockman/pkg/output"
+        "github.com/spf13/cobra"
+)
+
+var (
+        Version   = "0.2.4"
+        BuildDate = "unknown"
+        GitCommit = "unknown"
+)
+
+var versionCmd = &amp;cobra.Command{
+        Use:   "version",
+        Short: "Show version information",
+        Run: func(cmd *cobra.Command, args []string) <span class="cov0" title="0">{
+                output.Box("Dockman Version", []string{
+                        fmt.Sprintf("Version:    %s", Version),
+                        fmt.Sprintf("Build Date: %s", BuildDate),
+                        fmt.Sprintf("Git Commit: %s", GitCommit),
+                        fmt.Sprintf("Go Version: %s", runtime.Version()),
+                        fmt.Sprintf("OS/Arch:    %s/%s", runtime.GOOS, runtime.GOARCH),
+                })
+        }</span>,
+}
+</pre>
+		
+		<pre class="file" id="file25" style="display: none">package compose
+
+import (
+        "fmt"
+        "os"
+        "os/exec"
+        "strings"
+
+        "github.com/catstackdev/dockman/pkg/output"
+)
+
+// Executor handles docker-compose commands
+type Executor struct {
+        ComposeFile string
+        ProjectDir  string
+}
+
+// NewExecutor creates a new executor with auto-detected compose file
+func NewExecutor() (*Executor, error) <span class="cov0" title="0">{
+        composePath, err := FindComposeFile()
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return &amp;Executor{
+                ComposeFile: composePath,
+                ProjectDir:  GetProjectDir(composePath),
+        }, nil</span>
+}
+
+// Up starts services
+// func (e *Executor) Up(services []string) error {
+//         args := []string{"up", "-d"}
+//         args = append(args, services...)
+//
+//         if len(services) == 0 {
+//                 output.Info("Starting all services...")
+//         } else {
+//                 output.Info(fmt.Sprintf("Starting services: %s", strings.Join(services, ", ")))
+//         }
+//
+//         return e.runCommand(args...)
+// }
+
+// Down stops all services
+func (e *Executor) Down() error <span class="cov0" title="0">{
+        output.Info("Stopping all services...")
+        return e.runCommand("down")
+}</span>
+
+// Logs shows logs for services
+func (e *Executor) Logs(services []string, follow bool) error <span class="cov0" title="0">{
+        args := []string{"logs"}
+        if follow </span><span class="cov0" title="0">{
+                args = append(args, "-f")
+        }</span>
+        <span class="cov0" title="0">args = append(args, services...)
+
+        if len(services) == 0 </span><span class="cov0" title="0">{
+                output.Info("Showing logs for all services...")
+        }</span> else<span class="cov0" title="0"> {
+                output.Info(fmt.Sprintf("Showing logs for: %s", strings.Join(services, ", ")))
+        }</span>
+
+        <span class="cov0" title="0">return e.runCommand(args...)</span>
+}
+
+// Ps shows container status
+func (e *Executor) Ps() error <span class="cov0" title="0">{
+        return e.runCommand("ps")
+}</span>
+
+// Restart restarts services
+func (e *Executor) Restart(services []string) error <span class="cov0" title="0">{
+        args := []string{"restart"}
+        args = append(args, services...)
+        return e.runCommand(args...)
+}</span>
+
+// runCommand executes docker-compose with given arguments
+func (e *Executor) runCommand(args ...string) error <span class="cov0" title="0">{
+        // Build command: docker-compose -f /path/to/docker-compose.yml &lt;args&gt;
+        cmdArgs := []string{"-f", e.ComposeFile}
+        cmdArgs = append(cmdArgs, args...)
+
+        cmd := exec.Command("docker-compose", cmdArgs...)
+
+        // Change to project directory (important for relative paths in compose file)
+        cmd.Dir = e.ProjectDir
+
+        // Connect output to terminal
+        cmd.Stdout = os.Stdout
+        cmd.Stderr = os.Stderr
+        cmd.Stdin = os.Stdin
+
+        // Run command
+        if err := cmd.Run(); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("docker-compose failed: %w", err)
+        }</span>
+
+        <span class="cov0" title="0">return nil</span>
+}
+
+// GetInfo returns executor info for debugging
+func (e *Executor) GetInfo() string <span class="cov0" title="0">{
+        return fmt.Sprintf("Project: %s\nCompose file: %s", e.ProjectDir, e.ComposeFile)
+}</span>
+
+// NewExecutorWithFile creates executor with specific compose file
+func NewExecutorWithFile(composePath string) (*Executor, error) <span class="cov0" title="0">{
+        if !fileExists(composePath) </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("compose file not found: %s", composePath)
+        }</span>
+
+        <span class="cov0" title="0">return &amp;Executor{
+                ComposeFile: composePath,
+                ProjectDir:  GetProjectDir(composePath),
+        }, nil</span>
+}
+
+func (e *Executor) Clean(removeVolumes, removeAll bool) error <span class="cov0" title="0">{
+        args := []string{"down"}
+
+        if removeVolumes </span><span class="cov0" title="0">{
+                args = append(args, "-v")
+        }</span>
+
+        <span class="cov0" title="0">if removeAll </span><span class="cov0" title="0">{
+                args = append(args, "--rmi", "all", "-v")
+        }</span>
+
+        // Remove orphan containers
+        <span class="cov0" title="0">args = append(args, "--remove-orphans")
+
+        return e.runCommand(args...)</span>
+}
+
+// Exec executes a command in a service container
+func (e *Executor) Exec(service string, command []string) error <span class="cov0" title="0">{
+        args := []string{"exec", service}
+        args = append(args, command...)
+
+        return e.runCommand(args...)
+}</span>
+
+// PsQuiet shows only container IDs
+func (e *Executor) PsQuiet() error <span class="cov0" title="0">{
+        return e.runCommand("ps", "-q")
+}</span>
+
+// Pull pulls images (updated with better output)
+func (e *Executor) Pull(services []string) error <span class="cov0" title="0">{
+        args := []string{"pull"}
+
+        // Add --ignore-pull-failures to continue on errors
+        args = append(args, "--ignore-pull-failures")
+
+        args = append(args, services...)
+
+        return e.runCommand(args...)
+}</span>
+
+// ShowImages displays configured images from docker-compose.yml
+func (e *Executor) ShowImages(services []string) error <span class="cov0" title="0">{
+        args := []string{"config", "--services"}
+
+        if len(services) &gt; 0 </span><span class="cov0" title="0">{
+                // Show specific services only
+                for _, service := range services </span><span class="cov0" title="0">{
+                        args = append(args, service)
+                }</span>
+        }
+
+        <span class="cov0" title="0">return e.runCommand(args...)</span>
+}
+
+// Stats shows container resource usage
+func (e *Executor) Stats(services []string, noStream bool) error <span class="cov0" title="0">{
+        args := []string{"stats"}
+
+        if noStream </span><span class="cov0" title="0">{
+                args = append(args, "--no-stream")
+        }</span>
+
+        <span class="cov0" title="0">args = append(args, services...)
+
+        return e.runCommand(args...)</span>
+}
+
+// ListServices lists all services in compose file
+func (e *Executor) ListServices() error <span class="cov0" title="0">{
+        return e.runCommand("config", "--services")
+}</span>
+
+// Validate checks compose file syntax
+func (e *Executor) Validate() error <span class="cov0" title="0">{
+        return e.runCommand("config", "--quiet")
+}</span>
+
+// Port shows port mappings for a service
+func (e *Executor) Port(service, privatePort string) error <span class="cov0" title="0">{
+        args := []string{"port", service}
+        if privatePort != "" </span><span class="cov0" title="0">{
+                args = append(args, privatePort)
+        }</span>
+        <span class="cov0" title="0">return e.runCommand(args...)</span>
+}
+
+// Build builds or rebuilds services
+func (e *Executor) Build(services []string, noCache, parallel, pull bool) error <span class="cov0" title="0">{
+        args := []string{"build"}
+
+        if noCache </span><span class="cov0" title="0">{
+                args = append(args, "--no-cache")
+        }</span>
+
+        <span class="cov0" title="0">if !parallel </span><span class="cov0" title="0">{
+                args = append(args, "--no-parallel")
+        }</span>
+
+        <span class="cov0" title="0">if pull </span><span class="cov0" title="0">{
+                args = append(args, "--pull")
+        }</span>
+
+        <span class="cov0" title="0">args = append(args, services...)
+
+        return e.runCommand(args...)</span>
+}
+
+// Events streams container events
+func (e *Executor) Events() error <span class="cov0" title="0">{
+        return e.runCommand("events")
+}</span>
+
+// Pause pauses running services
+func (e *Executor) Pause(services []string) error <span class="cov0" title="0">{
+        args := []string{"pause"}
+        args = append(args, services...)
+        return e.runCommand(args...)
+}</span>
+
+// Unpause unpauses paused services
+func (e *Executor) Unpause(services []string) error <span class="cov0" title="0">{
+        args := []string{"unpause"}
+        args = append(args, services...)
+        return e.runCommand(args...)
+}</span>
+
+// Kill force stops services
+func (e *Executor) Kill(services []string, signal string) error <span class="cov0" title="0">{
+        args := []string{"kill"}
+
+        if signal != "" &amp;&amp; signal != "SIGKILL" </span><span class="cov0" title="0">{
+                args = append(args, "-s", signal)
+        }</span>
+
+        <span class="cov0" title="0">args = append(args, services...)
+        return e.runCommand(args...)</span>
+}
+
+// UpWithEnv starts services with custom env file
+func (e *Executor) UpWithEnv(services []string, envFile string) error <span class="cov0" title="0">{
+        args := []string{"up", "-d"}
+
+        if envFile != "" </span><span class="cov0" title="0">{
+                args = append([]string{"--env-file", envFile}, args...)
+        }</span>
+
+        <span class="cov0" title="0">args = append(args, services...)
+
+        if len(services) == 0 </span><span class="cov0" title="0">{
+                output.Info("Starting all services...")
+        }</span> else<span class="cov0" title="0"> {
+                output.Info(fmt.Sprintf("Starting services: %s", strings.Join(services, ", ")))
+        }</span>
+
+        <span class="cov0" title="0">return e.runCommand(args...)</span>
+}
+</pre>
+		
+		<pre class="file" id="file26" style="display: none">package compose
+
+import (
+        "fmt"
+        "os"
+        "path/filepath"
+)
+
+var composeFileNames = []string{
+        "docker-compose.yml",
+        "docker-compose.yaml",
+        "compose.yml",
+        "compose.yaml",
+}
+
+// FindComposeFile searches for docker-compose file
+// 1. Current directory
+// 2. Walk up parent directories
+// 3. Return error if not found
+func FindComposeFile() (string, error) <span class="cov8" title="1">{
+        // Start from current directory
+        currentDir, err := os.Getwd()
+        if err != nil </span><span class="cov0" title="0">{
+                return "", fmt.Errorf("failed to get current directory: %w", err)
+        }</span>
+
+        // Search current and parent directories
+        <span class="cov8" title="1">dir := currentDir
+        for </span><span class="cov8" title="1">{
+                // Check all possible compose file names
+                for _, filename := range composeFileNames </span><span class="cov8" title="1">{
+                        path := filepath.Join(dir, filename)
+                        if fileExists(path) </span><span class="cov8" title="1">{
+                                return path, nil
+                        }</span>
+                }
+
+                // Move to parent directory
+                <span class="cov8" title="1">parent := filepath.Dir(dir)
+
+                // Stop if we reached root
+                if parent == dir </span><span class="cov8" title="1">{
+                        break</span>
+                }
+
+                <span class="cov8" title="1">dir = parent</span>
+        }
+
+        <span class="cov8" title="1">return "", fmt.Errorf("docker-compose file not found (searched from %s to root)", currentDir)</span>
+}
+
+// fileExists checks if a file exists
+func fileExists(path string) bool <span class="cov8" title="1">{
+        info, err := os.Stat(path)
+        if os.IsNotExist(err) </span><span class="cov8" title="1">{
+                return false
+        }</span>
+        <span class="cov8" title="1">return !info.IsDir()</span>
+}
+
+// GetProjectDir returns the directory containing docker-compose file
+func GetProjectDir(composePath string) string <span class="cov0" title="0">{
+        return filepath.Dir(composePath)
+}</span>
+</pre>
+		
+		<pre class="file" id="file27" style="display: none">package config
+
+import (
+        "fmt"
+        "os"
+        "path/filepath"
+)
+
+const (
+        ConfigDirName   = ".dockman"
+        PresetsFileName = "presets.yaml"
+)
+
+// GetConfigDir returns the config directory path (~/.dockman)
+func GetConfigDir() (string, error) <span class="cov0" title="0">{
+        home, err := os.UserHomeDir()
+        if err != nil </span><span class="cov0" title="0">{
+                return "", fmt.Errorf("failed to get home directory: %w", err)
+        }</span>
+        <span class="cov0" title="0">return filepath.Join(home, ConfigDirName), nil</span>
+}
+
+// GetPresetsPath returns the presets file path
+func GetPresetsPath() (string, error) <span class="cov0" title="0">{
+        configDir, err := GetConfigDir()
+        if err != nil </span><span class="cov0" title="0">{
+                return "", err
+        }</span>
+        <span class="cov0" title="0">return filepath.Join(configDir, PresetsFileName), nil</span>
+}
+
+// EnsureConfigDir creates the config directory if it doesn't exist
+func EnsureConfigDir() error <span class="cov0" title="0">{
+        configDir, err := GetConfigDir()
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov0" title="0">if err := os.MkdirAll(configDir, 0o755); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to create config directory: %w", err)
+        }</span>
+
+        <span class="cov0" title="0">return nil</span>
+}
+
+// PresetsFileExists checks if presets file exists
+func PresetsFileExists() (bool, error) <span class="cov0" title="0">{
+        path, err := GetPresetsPath()
+        if err != nil </span><span class="cov0" title="0">{
+                return false, err
+        }</span>
+
+        <span class="cov0" title="0">_, err = os.Stat(path)
+        if os.IsNotExist(err) </span><span class="cov0" title="0">{
+                return false, nil
+        }</span>
+        <span class="cov0" title="0">if err != nil </span><span class="cov0" title="0">{
+                return false, err
+        }</span>
+
+        <span class="cov0" title="0">return true, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file28" style="display: none">package config
+
+import (
+        "fmt"
+        "os"
+        "path/filepath"
+
+        "gopkg.in/yaml.v3"
+)
+
+const ProjectConfigName = ".dockman.yml"
+
+// ProjectConfig holds project-specific configuration
+type ProjectConfig struct {
+        ComposeFile   string            `yaml:"compose_file,omitempty"`
+        DefaultPreset string            `yaml:"default_preset,omitempty"`
+        Aliases       map[string]string `yaml:"aliases,omitempty"`
+        AutoPull      bool              `yaml:"auto_pull,omitempty"`
+}
+
+// LoadProjectConfig loads config from project directory
+func LoadProjectConfig(projectDir string) (*ProjectConfig, error) <span class="cov0" title="0">{
+        configPath := filepath.Join(projectDir, ProjectConfigName)
+
+        // Check if config exists
+        if _, err := os.Stat(configPath); os.IsNotExist(err) </span><span class="cov0" title="0">{
+                // Return default config if not found
+                return &amp;ProjectConfig{}, nil
+        }</span>
+
+        // Read config file
+        <span class="cov0" title="0">data, err := os.ReadFile(configPath)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to read config: %w", err)
+        }</span>
+
+        // Parse YAML
+        <span class="cov0" title="0">var config ProjectConfig
+        if err := yaml.Unmarshal(data, &amp;config); err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to parse config: %w", err)
+        }</span>
+
+        <span class="cov0" title="0">return &amp;config, nil</span>
+}
+
+// SaveProjectConfig saves config to project directory
+func SaveProjectConfig(projectDir string, config *ProjectConfig) error <span class="cov0" title="0">{
+        configPath := filepath.Join(projectDir, ProjectConfigName)
+
+        data, err := yaml.Marshal(config)
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to marshal config: %w", err)
+        }</span>
+
+        <span class="cov0" title="0">if err := os.WriteFile(configPath, data, 0o644); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to write config: %w", err)
+        }</span>
+
+        <span class="cov0" title="0">return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file29" style="display: none">package preset
+
+import (
+        "fmt"
+        "os"
+
+        "github.com/catstackdev/dockman/internal/config"
+        "gopkg.in/yaml.v3"
+)
+
+// Manager handles preset operations
+type Manager struct {
+        config Config
+}
+
+// NewManager creates a new preset manager
+func NewManager() (*Manager, error) <span class="cov8" title="1">{
+        m := &amp;Manager{}
+        if err := m.load(); err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov8" title="1">return m, nil</span>
+}
+
+// load reads presets from config file
+func (m *Manager) load() error <span class="cov8" title="1">{
+        // Check if presets file exists
+        exists, err := config.PresetsFileExists()
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov8" title="1">if !exists </span><span class="cov8" title="1">{
+                // Create default presets
+                return m.createDefaultPresets()
+        }</span>
+
+        // Read existing presets
+        <span class="cov0" title="0">path, err := config.GetPresetsPath()
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov0" title="0">data, err := os.ReadFile(path)
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to read presets: %w", err)
+        }</span>
+
+        <span class="cov0" title="0">if err := yaml.Unmarshal(data, &amp;m.config); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to parse presets: %w", err)
+        }</span>
+
+        <span class="cov0" title="0">return nil</span>
+}
+
+// createDefaultPresets creates a default presets file
+func (m *Manager) createDefaultPresets() error <span class="cov8" title="1">{
+        // Ensure config directory exists
+        if err := config.EnsureConfigDir(); err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        // Default presets
+        <span class="cov8" title="1">m.config = Config{
+                Presets: map[string]Preset{
+                        "dev": {
+                                Services:    []string{"postgres", "redis", "api"},
+                                Description: "Development environment",
+                        },
+                        "db": {
+                                Services:    []string{"postgres", "redis"},
+                                Description: "Database services only",
+                        },
+                },
+        }
+
+        return m.save()</span>
+}
+
+// save writes presets to config file
+func (m *Manager) save() error <span class="cov8" title="1">{
+        path, err := config.GetPresetsPath()
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov8" title="1">data, err := yaml.Marshal(&amp;m.config)
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to marshal presets: %w", err)
+        }</span>
+
+        <span class="cov8" title="1">if err := os.WriteFile(path, data, 0o644); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to write presets: %w", err)
+        }</span>
+
+        <span class="cov8" title="1">return nil</span>
+}
+
+// Get returns a preset by name
+func (m *Manager) Get(name string) (*Preset, error) <span class="cov8" title="1">{
+        preset, exists := m.config.Presets[name]
+        if !exists </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("preset '%s' not found", name)
+        }</span>
+        <span class="cov8" title="1">return &amp;preset, nil</span>
+}
+
+// List returns all preset names
+func (m *Manager) List() []string <span class="cov8" title="1">{
+        names := make([]string, 0, len(m.config.Presets))
+        for name := range m.config.Presets </span><span class="cov8" title="1">{
+                names = append(names, name)
+        }</span>
+        <span class="cov8" title="1">return names</span>
+}
+
+// Exists checks if a preset exists
+func (m *Manager) Exists(name string) bool <span class="cov8" title="1">{
+        _, exists := m.config.Presets[name]
+        return exists
+}</span>
+
+// GetAll returns all presets
+func (m *Manager) GetAll() map[string]Preset <span class="cov8" title="1">{
+        return m.config.Presets
+}</span>
+</pre>
+		
+		<pre class="file" id="file30" style="display: none">// main.go
+package main
+
+import (
+        "github.com/catstackdev/dockman/cmd"
+)
+
+func main() <span class="cov0" title="0">{
+        cmd.Execute()
+}</span>
+</pre>
+		
+		<pre class="file" id="file31" style="display: none">// pkg/output/print.go
+package output
+
+import (
+        "fmt"
+        "strings"
+
+        "github.com/fatih/color"
+)
+
+var (
+        green  = color.New(color.FgGreen).SprintFunc()
+        red    = color.New(color.FgRed).SprintFunc()
+        yellow = color.New(color.FgYellow).SprintFunc()
+        cyan   = color.New(color.FgCyan).SprintFunc()
+)
+
+// Info prints info message
+func Info(msg string) <span class="cov0" title="0">{
+        fmt.Printf("%s %s\n", cyan("ℹ"), msg)
+}</span>
+
+// Success prints success message
+func Success(msg string) <span class="cov0" title="0">{
+        fmt.Printf("%s %s\n", green("✓"), msg)
+}</span>
+
+// Error prints error message
+func Error(msg string) <span class="cov0" title="0">{
+        fmt.Printf("%s %s\n", red("✗"), msg)
+}</span>
+
+// Warning prints warning message
+func Warning(msg string) <span class="cov0" title="0">{
+        fmt.Printf("%s %s\n", yellow("⚠"), msg)
+}</span>
+
+// FormatPresetName formats a preset name with color
+func FormatPresetName(name string) string <span class="cov0" title="0">{
+        return cyan("●") + " " + name
+}</span>
+
+// Gray prints gray text
+func Gray(text string) string <span class="cov0" title="0">{
+        gray := color.New(color.FgHiBlack).SprintFunc()
+        return gray(text)
+}</span>
+
+// Cyan returns cyan colored text (useful for prompts)
+func Cyan(text string) string <span class="cov0" title="0">{
+        return cyan(text)
+}</span>
+
+// ErrorWithHelp prints error with helpful suggestion
+func ErrorWithHelp(msg string, help string) <span class="cov0" title="0">{
+        Error(msg)
+        if help != "" </span><span class="cov0" title="0">{
+                fmt.Printf("  %s %s\n", yellow("💡"), Gray(help))
+        }</span>
+}
+
+// Box prints a boxed message
+func Box(title string, lines []string) <span class="cov0" title="0">{
+        width := 60
+
+        // Top border
+        fmt.Printf("\n╭%s╮\n", strings.Repeat("─", width))
+
+        // Title
+        titlePadding := width - len(title) - 2
+        if titlePadding &lt; 0 </span><span class="cov0" title="0">{
+                titlePadding = 0
+        }</span>
+        <span class="cov0" title="0">fmt.Printf("│ %s%s%s │\n",
+                green("✓"),
+                " "+title,
+                strings.Repeat(" ", titlePadding-2))
+
+        // Separator
+        fmt.Printf("├%s┤\n", strings.Repeat("─", width))
+
+        // Content lines
+        for _, line := range lines </span><span class="cov0" title="0">{
+                // Handle color codes in length calculation
+                visibleLen := len(stripANSI(line))
+                padding := width - visibleLen - 2
+                if padding &lt; 0 </span><span class="cov0" title="0">{
+                        padding = 0
+                }</span>
+                <span class="cov0" title="0">fmt.Printf("│ %s%s │\n", line, strings.Repeat(" ", padding))</span>
+        }
+
+        // Bottom border
+        <span class="cov0" title="0">fmt.Printf("╰%s╯\n\n", strings.Repeat("─", width))</span>
+}
+
+// stripANSI removes ANSI color codes for length calculation
+func stripANSI(s string) string <span class="cov0" title="0">{
+        // Simple ANSI stripper - remove escape sequences
+        var result strings.Builder
+        inEscape := false
+
+        for _, r := range s </span><span class="cov0" title="0">{
+                if r == '\x1b' </span><span class="cov0" title="0">{
+                        inEscape = true
+                        continue</span>
+                }
+                <span class="cov0" title="0">if inEscape </span><span class="cov0" title="0">{
+                        if r == 'm' </span><span class="cov0" title="0">{
+                                inEscape = false
+                        }</span>
+                        <span class="cov0" title="0">continue</span>
+                }
+                <span class="cov0" title="0">result.WriteRune(r)</span>
+        }
+
+        <span class="cov0" title="0">return result.String()</span>
+}
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>
